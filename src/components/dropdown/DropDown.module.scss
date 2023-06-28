@@ -1,0 +1,15 @@
+.backdrop {
+  position: fixed;
+  z-index: 1000;
+  background-color: #00000038;
+  height: 100vh;
+  width: 100vw;
+}
+
+.modal {
+  z-index: 1001;
+  position: fixed;
+  height: 100px;
+  width: 150px;
+  background-color: var(--blue01);
+}
