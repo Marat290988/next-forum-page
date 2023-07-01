@@ -9,7 +9,15 @@
 .modal {
   z-index: 1001;
   position: fixed;
-  height: 100px;
-  width: 150px;
-  background-color: var(--blue01);
+  transform: translateY(-5px);
+  opacity: 0;
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  background-color: var(--dark01);
+  border-radius: 5px;
+  box-shadow: rgb(3 61 119 / 31%) 0px 0px 7px;
+}
+
+.show.modal {
+  opacity: 1;
+  transform: translateY(5px);
 }

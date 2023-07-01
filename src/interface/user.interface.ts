@@ -4,5 +4,6 @@ export default interface IUser {
   updatedAt?: Date,
   email: string,
   password?: string,
-  name: string
+  name: string,
+  role: 'admin' | 'user'
 }

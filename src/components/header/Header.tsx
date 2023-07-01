@@ -9,7 +9,7 @@ export const Header: FC<{user: IUser | null | undefined}> = ({user}) => {
   return (
     <header className={styles.header}>
       <Logo />
-      <UserIcon />
+      <UserIcon user={user} />
     </header>
   )
 }

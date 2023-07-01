@@ -3,3 +3,16 @@
   display: flex;
   justify-content: center;
 }
+
+.dropdown-item {
+  color: var(--blue02);
+  font-weight: 700;
+  text-align: center;
+  padding: 3px 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.dropdown-item:hover {
+  background-color: var(--dark02);
+}
