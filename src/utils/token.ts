@@ -1,5 +1,8 @@
 import Cookies from 'js-cookie';
 import * as jose from 'jose';
+import { NextApiRequest } from 'next';
+import IUser from './../interface/user.interface';
+import { Role } from '@/enum/roles.enum';
 
 export const signJwt = async (
   payload: { sub: string },
@@ -42,5 +45,19 @@ export const decodeToken = () => {
     return JSON.parse(decodeToken.sub);
   } else {
     return null;
+  }
+}
+
+export const decodePassedToken = (token: string) => {
+  const decodeToken: any = jose.decodeJwt(token);
+  return JSON.parse(decodeToken.sub);
+}
+
+export const checkOnAdmin = (request: NextApiRequest) => {
+  const token = request.cookies['token'] as string;
+  const decodeToken: any = jose.decodeJwt(token);
+  const parsedUser: IUser = JSON.parse(decodeToken.sub);
+  if (parsedUser.role !== Role.ADMIN) {
+    throw new Error('User is not admin!');
   }
 }

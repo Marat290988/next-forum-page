@@ -1,3 +1,5 @@
+import { Role } from "@/enum/roles.enum";
+
 export default interface IUser {
   id?: number,
   createdAt?: Date,
@@ -5,5 +7,5 @@ export default interface IUser {
   email: string,
   password?: string,
   name: string,
-  role: 'admin' | 'user'
+  role: 'admin' | 'user' | Role
 }
