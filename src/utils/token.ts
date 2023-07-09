@@ -48,7 +48,7 @@ export const decodeToken = () => {
   }
 }
 
-export const decodePassedToken = (token: string) => {
+export const decodePassedToken = (token: string): IUser => {
   const decodeToken: any = jose.decodeJwt(token);
   return JSON.parse(decodeToken.sub);
 }

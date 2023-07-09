@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { hash } from 'argon2';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { NextResponse } from 'next/server';
+import { Prisma } from './../../../prisma/prisma';
 
 interface IRegisterForm {
   name: string,
@@ -18,7 +19,7 @@ export default async function handler(
     return;
   }
   const {email, name, password}: IRegisterForm = req.body;
-  const prisma = new PrismaClient();
+  const prisma = Prisma.getPrisma();
   let user;
   try {
     const oldEmail = await prisma.user.findUnique({

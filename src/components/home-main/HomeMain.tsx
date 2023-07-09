@@ -2,12 +2,30 @@ import styles from './HomeMain.module.scss';
 import { FC } from 'react';
 import IUser from './../../interface/user.interface';
 import { AddSection } from './add-section/AddSection';
+import { SectionItem } from './section-item/SectionItem';
+import { useAuth } from '@/hooks/useAuth';
+import { Role } from '@/enum/roles.enum';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
-export const HomeMain: FC<{user: IUser | null | undefined}> = () => {
+export const HomeMain: FC<{user: IUser | null | undefined, data: {name: string, id: number}[]}> = ({data}) => {
+  const user = useAuth();
+  const [isShowAddSection, setIsShowAddSection] = useState(false);
 
+  const [listSection, setListSection] = useState(data);
+  const updateList = (list: {id: number, name: string}[]): void => {
+    setListSection(list);
+  }
+  
+  useEffect(() => {
+    if (user && user.role) {
+      setIsShowAddSection(user.role === Role.ADMIN);
+    }
+  }, [user]);
   return (
     <main className={styles.main}>
-      <AddSection />
+      <SectionItem data={listSection} isShowAddForum={isShowAddSection} />
+      {isShowAddSection && <AddSection updateList={updateList} />}
     </main>
   );
 }

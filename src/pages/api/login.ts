@@ -4,6 +4,7 @@ import { verify } from 'argon2';
 import { signJwt } from '@/utils/token';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { serialize } from 'cookie';
+import { Prisma } from './../../../prisma/prisma';
 
 interface ILoginForm {
   email: string,
@@ -19,7 +20,7 @@ export default async function handler(
     return;
   }
   const {email, password}: ILoginForm = req.body;
-  const prisma = new PrismaClient();
+  const prisma = Prisma.getPrisma();
   let user;
   try {
     user = await prisma.user.findUnique({

@@ -4,7 +4,7 @@ import { useAuth } from './../../hooks/useAuth';
 import { Header } from './../../components/header/Header';
 import { HomeMain } from '@/components/home-main/HomeMain';
 
-export const Home: FC = () => {
+export const Home: FC<{data: {name: string, id: number}[]}> = ({data}) => {
   const user = useAuth();
   if (!user) {
     
@@ -12,7 +12,7 @@ export const Home: FC = () => {
   return (
     <>
       <Header user={user} />
-      <HomeMain user={user} />
+      <HomeMain user={user} data={data} />
     </>
   )
 }
