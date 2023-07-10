@@ -25,5 +25,16 @@ model Section {
   updatedAt    DateTime @updatedAt @map("updated_at")
   name         String   @unique
   user         User?    @relation(fields: [createdBy], references: [id])
-  createdBy    Int?     @map("created_by")      
+  createdBy    Int?     @map("created_by")     
+
+  forums       Forum[] 
+}
+
+model Forum {
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+  name         String   @unique
+  section      Section? @relation(fields: [parent], references: [id])
+  parent       Int?     @map("parent_section")  
 }

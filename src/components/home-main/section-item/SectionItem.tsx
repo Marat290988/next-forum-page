@@ -4,8 +4,6 @@ import { AddForum } from './add-forum/AddForum';
 import { useState } from 'react';
 
 export const SectionItem: FC<{data: {name: string, id: number}[], isShowAddForum: boolean}> = ({data, isShowAddForum}) => {
-  
-
 
   return (
     <div className='main-container'>
@@ -19,7 +17,7 @@ export const SectionItem: FC<{data: {name: string, id: number}[], isShowAddForum
             className={styles['section-content']}
           >
 
-            {isShowAddForum && <AddForum />}
+            {isShowAddForum && <AddForum sectionId={section.id} />}
           </div>
         </section>
       ))}

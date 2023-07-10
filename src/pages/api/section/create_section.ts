@@ -1,6 +1,5 @@
 import { checkOnAdmin } from '@/utils/token';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
 import { decodePassedToken } from '../../../utils/token';
 import { ISection } from '../../../interface/section.interface';
 import { Prisma } from './../../../../prisma/prisma';

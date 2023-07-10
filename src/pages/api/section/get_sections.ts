@@ -16,7 +16,13 @@ export default async function handler(
     sections = await prisma.section.findMany({
       select: {
         name: true,
-        id: true
+        id: true,
+        forums: {
+          select: {
+            id: true,
+            name: true
+          }
+        }
       }
     });
   } catch (e) {
