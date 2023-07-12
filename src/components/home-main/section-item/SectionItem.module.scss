@@ -15,3 +15,20 @@
 .section-content {
   padding: 10px;
 }
+
+.forums-container {
+  display: flex;
+  gap: 10px;
+}
+
+.forum-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: var(--darkbl);
+  cursor: pointer;
+  padding: 1px 10px;
+  color: var(--borderc);
+  // border-top-right-radius: 5px;
+  // border-bottom-right-radius: 5px;
+}

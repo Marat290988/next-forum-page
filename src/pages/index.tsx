@@ -14,6 +14,12 @@ import { axiosReq } from '@/axios/api';
 
 const inter = Inter({ subsets: ['latin'] })
 
+export interface StaticIndexItem {
+  name: string, 
+  id: number, 
+  forums: {name: string, id: number}[]
+}
+
 export default function HomePage({data}: InferGetStaticPropsType<typeof getStaticProps>) {
   const isLoading = useTypedSelector(state => state.loadingReducer.isLoading);
   const refModal = useRef<Element | null>(null);
@@ -45,7 +51,7 @@ export default function HomePage({data}: InferGetStaticPropsType<typeof getStati
   )
 }
 
-export const getStaticProps: GetStaticProps<{data: {name: string, id: number}[]}> = async () => {
+export const getStaticProps: GetStaticProps<{data: StaticIndexItem[]}> = async () => {
   const response = await axiosReq({
     url: process.env.NEXT_PUBLIC_SITE_URL + '/section/get_sections'
   });

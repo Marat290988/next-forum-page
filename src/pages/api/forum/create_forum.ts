@@ -17,7 +17,6 @@ export default async function handler(
         console.log(e)
       }
       const { name, sectionId } = req.body;
-      console.log(req.body)
       const prisma = Prisma.getPrisma();
       let forum;
       try {
