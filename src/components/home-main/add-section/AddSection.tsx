@@ -5,7 +5,7 @@ import { FC, FormEvent, useState, useEffect } from "react";
 import { ImCheckmark } from "react-icons/im";
 import { toast, ToastContainer } from "react-toastify";
 
-export const AddSection: FC<{updateList: (list: {id: number, name: string}[]) => void}> = ({updateList}) => {
+export const AddSection: FC<{updateList: (list: {name: string, id: number, forums: {name: string, id: number}[]}[]) => void}> = ({updateList}) => {
   const { setLoading } = useActions();
   const maxLength = 500;
   const [sectionText, setSectionText] = useState('');
@@ -21,7 +21,7 @@ export const AddSection: FC<{updateList: (list: {id: number, name: string}[]) =>
     setLoading();
     const getAllSection = async () => {
       try {
-        const response: {id: number, name: string}[] = await SectionService.getAllSections();
+        const response: {name: string, id: number, forums: {name: string, id: number}[]}[] = await SectionService.getAllSections();
         setLoading();
         updateList(response);
       } catch (e: any) {

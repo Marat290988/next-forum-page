@@ -8,12 +8,12 @@ import { Role } from '@/enum/roles.enum';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
-export const HomeMain: FC<{user: IUser | null | undefined, data: {name: string, id: number}[]}> = ({data}) => {
+export const HomeMain: FC<{user: IUser | null | undefined, data: {name: string, id: number, forums: {name: string, id: number}[]}[]}> = ({data}) => {
   const user = useAuth();
   const [isShowAddSection, setIsShowAddSection] = useState(false);
 
   const [listSection, setListSection] = useState(data);
-  const updateList = (list: {id: number, name: string}[]): void => {
+  const updateList = (list: {name: string, id: number, forums: {name: string, id: number}[]}[]): void => {
     setListSection(list);
   }
   

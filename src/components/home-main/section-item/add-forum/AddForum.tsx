@@ -6,10 +6,17 @@ import { ForumService } from '@/services/forum.service';
 import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
 
-export const AddForum: FC<{sectionId: number}> = ({sectionId}) => {
+export const AddForum: FC<{sectionId: number, updateData: Function, isInnerForum?: boolean}>
+
+= ({sectionId, updateData, isInnerForum = false}) => {
 
   const refData = useRef<any>(null);
   const { setLoading } = useActions();
+
+  const getForums = async () => {
+    const forums = isInnerForum ? await ForumService.getForumsByForumParent(sectionId) : await ForumService.getForumsByParent(sectionId);
+    updateData(forums, sectionId);
+  }
 
   const submit = async (text: string) => {
     if (text.trim().length === 0) {
@@ -17,9 +24,10 @@ export const AddForum: FC<{sectionId: number}> = ({sectionId}) => {
     }
     setLoading();
     try {
-      const response = await ForumService.createForum(text, sectionId);
+      const response = await ForumService.createForum(text, sectionId, isInnerForum);
       toast.success(response.message);
       refData.current?.clearInput();
+      getForums();
     } catch (e: any) {
       const errorText = e.response.data.message ? e.response.data.message : 'The endpoint does not exist.';
       toast.error(errorText);

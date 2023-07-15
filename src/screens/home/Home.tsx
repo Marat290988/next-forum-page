@@ -4,7 +4,7 @@ import { useAuth } from './../../hooks/useAuth';
 import { Header } from './../../components/header/Header';
 import { HomeMain } from '@/components/home-main/HomeMain';
 
-export const Home: FC<{data: {name: string, id: number}[]}> = ({data}) => {
+export const Home: FC<{data: {name: string, id: number, forums: {name: string, id: number}[]}[]}> = ({data}) => {
   const user = useAuth();
   if (!user) {
     

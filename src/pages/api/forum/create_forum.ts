@@ -16,14 +16,19 @@ export default async function handler(
       } catch(e) {
         console.log(e)
       }
-      const { name, sectionId } = req.body;
+      const { name, sectionId, isInnerForum } = req.body;
       const prisma = Prisma.getPrisma();
       let forum;
+      let saveData;
+      if (isInnerForum) {
+        saveData = {name: name, forumParentId: sectionId};
+      } else {
+        saveData = {name: name, parent: sectionId};
+      }
       try {
         forum = await prisma.forum.create({
           data: {
-            name: name, 
-            parent: sectionId
+            ...saveData
           }
         });
       } catch (e) {

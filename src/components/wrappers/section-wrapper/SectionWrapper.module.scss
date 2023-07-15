@@ -1,0 +1,13 @@
+.section-item {
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 2px solid var(--darkbl);
+  overflow: hidden;
+}
+
+.section-item h2 {
+  background-color: var(--darkbl);
+  padding: 0 25px;
+  font-size: 17px;
+  color: var(--blue02);
+}
