@@ -7,13 +7,24 @@ import { SectionWrapper } from '@/components/wrappers/section-wrapper/SectionWra
 import { AddForum } from '@/components/home-main/section-item/add-forum/AddForum';
 import { Role } from '@/enum/roles.enum';
 import { MyGridTable } from './../../components/ui/MyGridTable/MyGridTable';
+import { useRouter } from 'next/router';
+import { useQuery } from '@tanstack/react-query';
+import { ForumService } from '@/services/forum.service';
+import { useActions } from '@/hooks/useActions';
 
-export const Forum: FC<{forum: IForum}> = ({forum}) => {
-  const [_, updateComponent] = useState(new Date().getTime());
-
-  const updateData = (fData: any, parentId: string | number) => {
-    forum.children = fData;
-    updateComponent(new Date().getTime());
+export const Forum: FC<{forum?: IForum, name: string}> = ({forum, name}) => {
+  const fId = useRouter().query.f;
+  const {data, isLoading, refetch} = useQuery(
+    ['forum'],
+    () => ForumService.getForumsByForumParent(fId as string)
+  );
+  const { setLoadingWithParam } = useActions();
+  
+  const updateData = () => {
+    setLoadingWithParam(true);
+    refetch().then(_ => {
+      setLoadingWithParam(false);
+    });
   };
   const user = useAuth();
   const [isShowAddSection, setIsShowAddSection] = useState(false);
@@ -22,20 +33,25 @@ export const Forum: FC<{forum: IForum}> = ({forum}) => {
       setIsShowAddSection(user.role === Role.ADMIN);
     }
   }, [user]);
+  useEffect(() => {
+    setLoadingWithParam(isLoading);
+  }, [isLoading]);
   return (
     <>
       <Header user={user} />
       <main className={styles.main}>
         <div className='main-container'>
-          <SectionWrapper title={forum.name} style={{height: '100%'}}>
-            {/* <ul>
-              {forum.children.map(f => (
-                <li key={f.id}>{f.name}</li>
-              ))}
-            </ul> */}
-            <MyGridTable data={forum.children} />
+          <SectionWrapper title={name} style={{height: '100%'}}>
+            {data && (
+              <ul>
+                {data.map(f => (
+                  <li key={f.id}>{f.name}</li>
+                ))}
+              </ul>
+            )}
+            {/* <MyGridTable data={forum.children} /> */}
             <div className='p-[10px]'>
-              {isShowAddSection && <AddForum isInnerForum={true} sectionId={forum.id} updateData={updateData} />}
+              {isShowAddSection && <AddForum isInnerForum={true} sectionId={Number.parseInt(fId as string)} updateData={updateData} />}
             </div>
           </SectionWrapper>
         </div>

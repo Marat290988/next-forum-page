@@ -16,7 +16,7 @@ const ForumPage = (props: {forum: IForum}) => {
       <Head>
         <title>{title}</title>
       </Head>
-      <Forum forum={props.forum} />
+      <Forum name={props.forum.name} />
     </>
   );
 }

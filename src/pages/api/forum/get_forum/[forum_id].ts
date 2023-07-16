@@ -20,12 +20,12 @@ export default async function handler(
           select: {
             name: true,
             id: true,
-            children: {
-              select: {
-                name: true,
-                id: true
-              }
-            }
+            // children: {
+            //   select: {
+            //     name: true,
+            //     id: true
+            //   }
+            // }
           }
         });
         prisma.$disconnect();

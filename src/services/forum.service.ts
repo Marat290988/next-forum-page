@@ -1,3 +1,4 @@
+import { IForum } from '@/pages/forum';
 import { axiosReq } from './../axios/api';
 
 export class ForumService {
@@ -15,7 +16,7 @@ export class ForumService {
     });
     return response.data.forums;
   }
-  static async getForumsByForumParent(parentId: string | number) {
+  static async getForumsByForumParent(parentId: string | number): Promise<IForum[]> {
     const response = await axiosReq({
       url: `/forum/get_forums/${parentId}`
     });

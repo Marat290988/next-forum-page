@@ -1,5 +1,5 @@
-import { FC, useRef } from 'react'
-import styles from './AddForum.module.scss'
+import { FC, useRef } from 'react';
+import styles from './AddForum.module.scss';
 import { MyForm } from '@/components/ui/MyForm/MyForm';
 import { useActions } from '@/hooks/useActions';
 import { ForumService } from '@/services/forum.service';
