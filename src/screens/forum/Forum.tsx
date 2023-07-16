@@ -6,12 +6,12 @@ import { IForum } from './../../pages/forum/index';
 import { SectionWrapper } from '@/components/wrappers/section-wrapper/SectionWrapper';
 import { AddForum } from '@/components/home-main/section-item/add-forum/AddForum';
 import { Role } from '@/enum/roles.enum';
+import { MyGridTable } from './../../components/ui/MyGridTable/MyGridTable';
 
 export const Forum: FC<{forum: IForum}> = ({forum}) => {
   const [_, updateComponent] = useState(new Date().getTime());
 
   const updateData = (fData: any, parentId: string | number) => {
-    console.log(fData)
     forum.children = fData;
     updateComponent(new Date().getTime());
   };
@@ -28,11 +28,12 @@ export const Forum: FC<{forum: IForum}> = ({forum}) => {
       <main className={styles.main}>
         <div className='main-container'>
           <SectionWrapper title={forum.name} style={{height: '100%'}}>
-            <ul>
+            {/* <ul>
               {forum.children.map(f => (
                 <li key={f.id}>{f.name}</li>
               ))}
-            </ul>
+            </ul> */}
+            <MyGridTable data={forum.children} />
             <div className='p-[10px]'>
               {isShowAddSection && <AddForum isInnerForum={true} sectionId={forum.id} updateData={updateData} />}
             </div>

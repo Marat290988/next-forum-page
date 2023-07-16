@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
-import { Prisma } from './../../../../prisma/prisma';
+import { Prisma } from '../../../utils/prisma';
 
 export default async function handler(
   req: NextApiRequest,
@@ -25,6 +25,7 @@ export default async function handler(
         }
       }
     });
+    prisma.$disconnect();
   } catch (e) {
     res.status(422).json({message: 'Problems with DB.'});
     return;

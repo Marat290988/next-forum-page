@@ -4,7 +4,7 @@ import { verify } from 'argon2';
 import { signJwt } from '@/utils/token';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { serialize } from 'cookie';
-import { Prisma } from './../../../prisma/prisma';
+import { Prisma } from '../../utils/prisma';
 
 interface ILoginForm {
   email: string,
@@ -53,9 +53,11 @@ export default async function handler(
     };
 
     res.setHeader('Set-Cookie', serialize('token', token, {...cookieOptions}));
+    prisma.$disconnect();
     res.status(200).json({user: resUser, message: 'Successful logging.'});
 
   } catch(e: any) {
+    prisma.$disconnect();
     res.status(422).json({message: 'Problems with DB.'});
   }
 }

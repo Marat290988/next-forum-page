@@ -1,7 +1,7 @@
 
 import { NextApiRequest, NextApiResponse } from 'next';
 import { checkOnAdmin } from '@/utils/token';
-import { Prisma } from './../../../../prisma/prisma';
+import { Prisma } from '../../../utils/prisma';
 
 export default async function handler(
   req: NextApiRequest,
@@ -31,8 +31,10 @@ export default async function handler(
             ...saveData
           }
         });
+        prisma.$disconnect();
       } catch (e) {
         res.status(422).json({message: 'Problems with DB.'});
+        prisma.$disconnect();
         return;
       }
       res.status(200).json({message: 'Forum has been successfully created.', forum});

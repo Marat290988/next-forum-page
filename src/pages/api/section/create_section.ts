@@ -2,7 +2,7 @@ import { checkOnAdmin } from '@/utils/token';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { decodePassedToken } from '../../../utils/token';
 import { ISection } from '../../../interface/section.interface';
-import { Prisma } from './../../../../prisma/prisma';
+import { Prisma } from '../../../utils/prisma';
 
 export default async function handler(
   req: NextApiRequest,
@@ -28,6 +28,7 @@ export default async function handler(
         createdBy: id
       }
     });
+    prisma.$disconnect();
   } catch (e) {
     res.status(422).json({message: 'Problems with DB.'});
     return;

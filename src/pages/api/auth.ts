@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { hash } from 'argon2';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { NextResponse } from 'next/server';
-import { Prisma } from './../../../prisma/prisma';
+import { Prisma } from '../../utils/prisma';
 
 interface IRegisterForm {
   name: string,
@@ -43,7 +43,9 @@ export default async function handler(
         password: await hash(password)
       }
     });
+    prisma.$disconnect();
   } catch (e) {
+    prisma.$disconnect();
     res.status(422).json({message: 'Problems with DB.'});
     return;
   }
