@@ -16,7 +16,7 @@ export const Forum: FC<{forum?: IForum, name: string}> = ({forum, name}) => {
   const fId = useRouter().query.f;
   const {data, isLoading, refetch} = useQuery(
     ['forum'],
-    () => ForumService.getForumsByForumParent(fId as string)
+    (): Promise<IForum[]> => ForumService.getForumsByForumParent(fId as string)
   );
   const { setLoadingWithParam } = useActions();
   
@@ -42,14 +42,14 @@ export const Forum: FC<{forum?: IForum, name: string}> = ({forum, name}) => {
       <main className={styles.main}>
         <div className='main-container'>
           <SectionWrapper title={name} style={{height: '100%'}}>
-            {data && (
+            {/* {data && (
               <ul>
                 {data.map(f => (
                   <li key={f.id}>{f.name}</li>
                 ))}
               </ul>
-            )}
-            {/* <MyGridTable data={forum.children} /> */}
+            )} */}
+            {data && <MyGridTable data={data} />}
             <div className='p-[10px]'>
               {isShowAddSection && <AddForum isInnerForum={true} sectionId={Number.parseInt(fId as string)} updateData={updateData} />}
             </div>
