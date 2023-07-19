@@ -41,19 +41,20 @@ export const Forum: FC<{forum?: IForum, name: string}> = ({forum, name}) => {
       <Header user={user} />
       <main className={styles.main}>
         <div className='main-container'>
-          <SectionWrapper title={name} style={{height: '100%'}}>
-            {/* {data && (
+        {data && <MyGridTable data={data} />}
+          <div className='p-[10px]'>
+            {isShowAddSection && <AddForum isInnerForum={true} sectionId={Number.parseInt(fId as string)} updateData={updateData} />}
+          </div>
+          {/* <SectionWrapper title={name} style={{height: '100%'}}>
+            {data && (
               <ul>
                 {data.map(f => (
                   <li key={f.id}>{f.name}</li>
                 ))}
               </ul>
-            )} */}
-            {data && <MyGridTable data={data} />}
-            <div className='p-[10px]'>
-              {isShowAddSection && <AddForum isInnerForum={true} sectionId={Number.parseInt(fId as string)} updateData={updateData} />}
-            </div>
-          </SectionWrapper>
+            )}
+            
+          </SectionWrapper> */}
         </div>
       </main>
     </>
