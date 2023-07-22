@@ -16,11 +16,11 @@ export class ForumService {
     });
     return response.data.forums;
   }
-  static async getForumsByForumParent(parentId: string | number): Promise<IForum[]> {
+  static async getForumsByForumParent(parentId: string | number): Promise<{forums: IForum[], isForum: boolean, themes: any[]}> {
     const response = await axiosReq({
       url: `/forum/get_forums/${parentId}`
     });
-    return response.data.forums;
+    return {forums: response.data.forums, isForum: response.data.isForum, themes: response.data.themes};
   }
   static async getForumById(forumId: string | number) {
     const response = await axiosReq({

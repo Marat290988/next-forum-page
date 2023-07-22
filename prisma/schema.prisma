@@ -7,6 +7,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ThemeType {
+  THEME
+  VOTE
+}
+
 model User {
   id           Int      @id @default(autoincrement())
   createdAt    DateTime @default(now()) @map("created_at")
@@ -17,13 +22,15 @@ model User {
   role         String   @default("user")
 
   sections     Section[]
+  themes       Theme[]
+  comments     Comment[]
 }
 
 model Section {
   id           Int      @id @default(autoincrement())
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
-  name         String   @unique
+  name         String   
   user         User?    @relation(fields: [createdBy], references: [id])
   createdBy    Int?     @map("created_by")     
 
@@ -34,10 +41,42 @@ model Forum {
   id            Int      @id @default(autoincrement())
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @updatedAt @map("updated_at")
-  name          String   @unique
+  name          String   
   section       Section? @relation(fields: [parent], references: [id])
   parent        Int?     @map("parent_section")  
   children      Forum[]  @relation("children")
   forumParent   Forum?   @relation("children", fields: [forumParentId], references: [id])
   forumParentId Int?     @map("forum_parent_id")
+
+  themes        Theme[]
+  comments      Comment[]
+}
+
+model Theme {
+  id              Int        @id @default(autoincrement())
+  createdAt       DateTime   @default(now()) @map("created_at")
+  updatedAt       DateTime   @updatedAt @map("updated_at")
+  authorTheme     User       @relation(fields: [authorThemeId], references: [id])
+  authorThemeId   Int        @map("author_theme_id")
+  title           String
+  typeTheme       ThemeType  @map("type_theme")
+  forum           Forum      @relation(fields: [forumId], references: [id])
+  forumId         Int        @map("forum_id")
+
+  comments        Comment[]
+}
+
+model Comment {
+  id              Int        @id @default(autoincrement())
+  createdAt       DateTime   @default(now()) @map("created_at")
+  updatedAt       DateTime   @updatedAt @map("updated_at")
+  authorComment   User       @relation(fields: [authorCommentId], references: [id])
+  authorCommentId Int        @map("author_comment_id")
+  theme           Theme      @relation(fields: [themeId], references: [id])
+  themeId         Int        @map("theme_id")
+  forum           Forum      @relation(fields: [forumId], references: [id])
+  forumId         Int        @map("forum_id")
+  isPrimary       String     @map("is_primary")
+  text            String     
+  quoteCommentId  Int?       @map("quote_comment_id")
 }
