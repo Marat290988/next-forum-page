@@ -4,7 +4,7 @@ import { MyGridForumTableHeader } from "./MyGridForumTableHeader/MyGridForumTabl
 import { MyGridForumTableRow } from "./MyGridForumTableRow/MyGridForumTableRow";
 
 export const MyGridTable: FC<{data: IForum[]}> = ({data}) => {
-
+ 
   console.log(data)
 
   return (
