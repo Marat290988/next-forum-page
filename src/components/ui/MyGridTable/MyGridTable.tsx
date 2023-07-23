@@ -5,8 +5,6 @@ import { MyGridForumTableRow } from "./MyGridForumTableRow/MyGridForumTableRow";
 
 export const MyGridTable: FC<{data: IForum[]}> = ({data}) => {
  
-  console.log(data)
-
   return (
     <>
       <div className='p-[10px]'>

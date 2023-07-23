@@ -11,11 +11,13 @@ import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { ForumService } from '@/services/forum.service';
 import { useActions } from '@/hooks/useActions';
+import { MyButton } from '@/components/ui/MyButton/MyButton';
 
 export const Forum: FC<{forum?: IForum, name: string}> = ({forum, name}) => {
-  const fId = useRouter().query.f;
+  const router = useRouter();
+  const fId = router.query.f;
   const {data, isLoading, refetch} = useQuery(
-    ['forum'],
+    ['forum', fId],
     (): Promise<{forums: IForum[], isForum: boolean, themes: any[]}> => ForumService.getForumsByForumParent(fId as string)
   );
   const { setLoadingWithParam } = useActions();
@@ -30,19 +32,24 @@ export const Forum: FC<{forum?: IForum, name: string}> = ({forum, name}) => {
   const [isShowAddSection, setIsShowAddSection] = useState(false);
   useEffect(() => {
     if (user && user.role && data) {
-      console.log(data)
       setIsShowAddSection(user.role === Role.ADMIN && data.isForum);
     }
   }, [user, data]);
   useEffect(() => {
     setLoadingWithParam(isLoading);
   }, [isLoading]);
+  const buttonClickHandle = () => {
+    router.push('/new_topic?f=' + fId);
+  }
   return (
     <>
       <Header user={user} />
       <main className={styles.main}>
         <div className='main-container'>
-        {data && <MyGridTable data={data.forums} />}
+          <div className='px-[10px]'>
+            {data && data.forums.length === 0 && <MyButton buttonClick={buttonClickHandle}>Start a new topic</MyButton>}
+          </div>
+          {data && <MyGridTable data={data.forums} />}
           <div className='p-[10px]'>
             {isShowAddSection && <AddForum isInnerForum={true} sectionId={Number.parseInt(fId as string)} updateData={updateData} />}
           </div>

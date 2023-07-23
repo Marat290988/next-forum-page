@@ -1,10 +1,15 @@
 import { PrismaClient } from '@prisma/client';
 
+declare global {
+  var prisma: PrismaClient
+}
+
 export class Prisma {
-  public static Prisma: PrismaClient = new PrismaClient();
 
   static getPrisma() {
-    // this.Prisma ||= new PrismaClient();
-    return this.Prisma;
+    if (!global.prisma) {
+      global.prisma = new PrismaClient();
+    }
+    return global.prisma;
   }
 }
