@@ -1,0 +1,67 @@
+.editor-cont  {
+  
+  :global(.rdw-editor-wrapper) {
+    height: 100%;
+  }
+
+  :global(.rdw-editor-main) {
+    border: 2px solid var(--borderc);
+    height: 250px;
+    border-top: none;
+    font-family: "IBM Plex Sans" !important;
+    padding: 5px;
+    color: var(--fontcolor1);
+
+    :global(.public-DraftStyleDefault-block) {
+      margin: 0;
+    }
+
+    :global(.rdw-link-decorator-wrapper) {
+      a {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+
+      img {
+        display: none;
+      }
+    }
+  }
+
+  :global(.DraftEditor-root) {
+    height: unset;
+  }
+
+  :global(.rdw-editor-toolbar) {
+    margin-bottom: 0;
+    visibility: visible;
+    background-color: var(--borderc);
+    border: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+    :global(.rdw-option-wrapper) {
+      background-color: var(--blue02);
+      border: none;
+    }
+
+    :global(.rdw-link-modal) {
+      background-color: var(--dark03);
+      border-color: var(--borderc);
+      box-shadow: 3px 3px 5px var(--borderc);
+    }
+
+    :global(.rdw-link-modal-input) {
+      background-color: var(--dark02);
+    }
+
+    button {
+      background-color: var(--blue01);
+    }
+  }
+
+  :global(div[title="Monospace"]) {
+    display: none;
+  }
+
+}

@@ -1,0 +1,14 @@
+.input {
+  border: 1px solid transparent;
+  outline: none;
+  background-color: var(--darkbl);
+  border-radius: 3px;
+  padding: 3px;
+  font-size: 14px;
+  color: var(--blue01);
+  width: 100%;
+}
+
+.input.error {
+  border: 1px solidvar(--error01);
+}
