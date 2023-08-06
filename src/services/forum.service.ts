@@ -1,5 +1,6 @@
 import { IForum } from '@/pages/forum';
 import { axiosReq } from './../axios/api';
+import { RequestCreateTopic } from '@/pages/api/forum/create_topic';
 
 export class ForumService {
   static async createForum(text: string, sectionId: number, isInnerForum: boolean) {
@@ -27,5 +28,13 @@ export class ForumService {
       url: `/forum/get_forum/${forumId}`
     });
     return response.data.forum;
+  }
+  static async createTopic(topicData: RequestCreateTopic) {
+    const response = await axiosReq({
+      url: '/forum/create_topic',
+      method: 'POST',
+      data: topicData
+    });
+    return response.data;
   }
 }

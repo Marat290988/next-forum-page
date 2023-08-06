@@ -47,9 +47,9 @@ export const Forum: FC<{forum?: IForum, name: string}> = ({forum, name}) => {
       <main className={styles.main}>
         <div className='main-container'>
           <div className='px-[10px]'>
-            {data && data.forums.length === 0 && <MyButton buttonClick={buttonClickHandle}>Start a new topic</MyButton>}
+            {data && user && data.forums.length === 0 && <MyButton buttonClick={buttonClickHandle} canClick={true}>Start a new topic</MyButton>}
           </div>
-          {data && <MyGridTable data={data.forums} />}
+          {data && <MyGridTable data={data} />}
           <div className='p-[10px]'>
             {isShowAddSection && <AddForum isInnerForum={true} sectionId={Number.parseInt(fId as string)} updateData={updateData} />}
           </div>

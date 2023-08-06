@@ -20,13 +20,13 @@ export const MyGridForumTableRow: FC<{dataItem: IForum}> = ({dataItem}) => {
       paddingTop: '2px',
       paddingBottom: '3px',
       borderBottom: '1px solid var(--borderc)',
-      cursor: 'pointer'
-    }, isLink: true}
+      cursor: 'pointer',
+    }, isLink: true, linkBase: 'forum?f'}
   ]
 
   return (
     <>
-      <MyGridTableBase myGridData={gridData} cssClass={styles['grid-row']} forumId={dataItem.id} />
+      <MyGridTableBase myGridData={gridData} cssClass={styles['grid-row']} id={dataItem.id} />
     </>
   );
 }

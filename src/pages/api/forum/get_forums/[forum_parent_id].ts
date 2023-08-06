@@ -42,7 +42,8 @@ export default async function handler(
                   id: true,
                   name: true
                 }
-              }
+              },
+              title: true
             }
           });
         }

@@ -53,11 +53,22 @@ export const getServerSideProps: GetServerSideProps<{createTopServerData: Create
     }
   }
 
-  return {
-    props: {
-      createTopServerData
+  if (forum) {
+    return {
+      props: {
+        createTopServerData
+      }
+    }
+  } else {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+      props: {}
     }
   }
+
 }
 
 export default NewTopicPage;

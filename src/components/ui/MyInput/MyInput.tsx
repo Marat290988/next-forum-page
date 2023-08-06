@@ -1,8 +1,10 @@
-import { FC, FormEvent, useState } from 'react';
+import { FC, FormEvent, forwardRef, useState } from 'react';
 import styles from './MyInput.module.scss';
 import { maxLength } from '@/utils/validate-util';
 
-export const MyInput: FC<{title: string, maxLength: number}> = ({title, maxLength}) => {
+export const MyInput: FC<{title: string, maxLength: number, handleChangeInputVal: (val: string) => void, ref: any}> = 
+
+  forwardRef (({title, maxLength, handleChangeInputVal}, ref: any) => {
 
   const [inputText, setInputText] = useState('');
   const [isTouch, setIsTouch] = useState(false);
@@ -12,19 +14,20 @@ export const MyInput: FC<{title: string, maxLength: number}> = ({title, maxLengt
     }
     const el: HTMLInputElement = e.target as HTMLInputElement;
     setInputText(el.value.substring(0, maxLength));
+    handleChangeInputVal(el.value.substring(0, maxLength));
   }
 
-  const resetInput = () => {
+  ref.current = {clearInput: () => {
     setInputText('');
     setIsTouch(false);
-  }
+  }};
 
   return (
     <>
       <div>
         <h3>{title}</h3>
         <input 
-          className={styles['input']}
+          className={`${styles['input']} ${isTouch && inputText === '' ? styles['error'] : ''}`}
           value={inputText}
           onInput={inputHandle}
           onPaste={inputHandle}
@@ -33,4 +36,4 @@ export const MyInput: FC<{title: string, maxLength: number}> = ({title, maxLengt
       </div>
     </>
   )
-}
+})

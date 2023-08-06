@@ -6,10 +6,11 @@ export type MyGridType = {
   gridColumns: string,
   style?: Record<string, string>,
   icon?: ReactNode,
-  isLink?: boolean
+  isLink?: boolean,
+  linkBase?: string
 }
 
-export const MyGridTableBase: FC<{cssClass?: string, myGridData: MyGridType[], forumId?: number}> = ({cssClass, myGridData, forumId}) => {
+export const MyGridTableBase: FC<{cssClass?: string, myGridData: MyGridType[], id?: number}> = ({cssClass, myGridData, id}) => {
 
   let gridStyle = '';
   myGridData.forEach(gr => {
@@ -27,7 +28,7 @@ export const MyGridTableBase: FC<{cssClass?: string, myGridData: MyGridType[], f
             return (
               <Link
                 key={gr.value}
-                href={`/forum?f=${forumId}`}
+                href={`/${gr.linkBase}=${id}`}
               >
                 <div
                   style={!!gr.style ? gr.style : {}}
