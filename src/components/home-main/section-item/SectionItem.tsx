@@ -36,6 +36,7 @@ export const SectionItem: FC<{data: {name: string, id: number, forums: {name: st
                   md:w-[48%]
                   w-full
                 `}
+                shallow={true}
               >
                 <li className={`${styles['forum-item']}`}>
                   <FaRegDotCircle /> {forum.name}

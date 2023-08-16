@@ -1,0 +1,10 @@
+.grid-row {
+  background-color: var(--dark03);
+  color: var(--fontcolor1);
+  font-family: 'IBM Plex Sans';
+  transition: background-color 0.2s ease-in-out;
+}
+
+.grid-row:hover {
+  background-color: var(--darkbl);
+}

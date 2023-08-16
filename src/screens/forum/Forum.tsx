@@ -1,30 +1,33 @@
-import { FC, useState, useEffect } from 'react';
-import styles from './Forum.module.scss';
-import { useAuth } from '@/hooks/useAuth';
-import { Header } from '@/components/header/Header';
-import { IForum } from './../../pages/forum/index';
-import { SectionWrapper } from '@/components/wrappers/section-wrapper/SectionWrapper';
-import { AddForum } from '@/components/home-main/section-item/add-forum/AddForum';
-import { Role } from '@/enum/roles.enum';
-import { MyGridTable } from './../../components/ui/MyGridTable/MyGridTable';
-import { useRouter } from 'next/router';
-import { useQuery } from '@tanstack/react-query';
-import { ForumService } from '@/services/forum.service';
-import { useActions } from '@/hooks/useActions';
-import { MyButton } from '@/components/ui/MyButton/MyButton';
+import { MyGridTable } from "./../../components/ui/MyGridTable/MyGridTable";
+import { IForum } from "./../../pages/forum/index";
+import styles from "./Forum.module.scss";
+import { Header } from "@/components/header/Header";
+import { AddForum } from "@/components/home-main/section-item/add-forum/AddForum";
+import { MyButton } from "@/components/ui/MyButton/MyButton";
+import { Role } from "@/enum/roles.enum";
+import { useActions } from "@/hooks/useActions";
+import { useAuth } from "@/hooks/useAuth";
+import { ForumService } from "@/services/forum.service";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/router";
+import { FC, useState, useEffect } from "react";
 
-export const Forum: FC<{forum?: IForum, name: string}> = ({forum, name}) => {
+export const Forum: FC<{ forum?: IForum; name: string }> = ({
+  forum,
+  name,
+}) => {
   const router = useRouter();
   const fId = router.query.f;
-  const {data, isLoading, refetch} = useQuery(
-    ['forum', fId],
-    (): Promise<{forums: IForum[], isForum: boolean, themes: any[]}> => ForumService.getForumsByForumParent(fId as string)
+  const { data, isLoading, refetch } = useQuery(
+    ["forum", fId],
+    (): Promise<{ forums: IForum[]; isForum: boolean; themes: any[] }> =>
+      ForumService.getForumsByForumParent(fId as string)
   );
   const { setLoadingWithParam } = useActions();
-  
+
   const updateData = () => {
     setLoadingWithParam(true);
-    refetch().then(_ => {
+    refetch().then((_) => {
       setLoadingWithParam(false);
     });
   };
@@ -35,26 +38,38 @@ export const Forum: FC<{forum?: IForum, name: string}> = ({forum, name}) => {
       setIsShowAddSection(user.role === Role.ADMIN && data.isForum);
     }
   }, [user, data]);
+
   useEffect(() => {
     setLoadingWithParam(isLoading);
   }, [isLoading]);
+
   const buttonClickHandle = () => {
-    router.push('/new_topic?f=' + fId);
-  }
+    router.push("/new_topic?f=" + fId);
+  };
   return (
     <>
       <Header user={user} />
       <main className={styles.main}>
-        <div className='main-container'>
-          <div className='px-[10px]'>
-            {data && user && data.forums.length === 0 && <MyButton buttonClick={buttonClickHandle} canClick={true}>Start a new topic</MyButton>}
+        <div className="main-container">
+          <div className="px-[10px]">
+            {data && user && data.forums.length === 0 && (
+              <MyButton buttonClick={buttonClickHandle} canClick={true}>
+                Start a new topic
+              </MyButton>
+            )}
           </div>
           {data && <MyGridTable data={data} />}
-          <div className='p-[10px]'>
-            {isShowAddSection && <AddForum isInnerForum={true} sectionId={Number.parseInt(fId as string)} updateData={updateData} />}
+          <div className="p-[10px]">
+            {isShowAddSection && (
+              <AddForum
+                isInnerForum={true}
+                sectionId={Number.parseInt(fId as string)}
+                updateData={updateData}
+              />
+            )}
           </div>
         </div>
       </main>
     </>
   );
-}
+};

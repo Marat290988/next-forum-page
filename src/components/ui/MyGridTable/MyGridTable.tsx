@@ -3,18 +3,22 @@ import { IForum } from './../../../pages/forum/index';
 import { MyGridForumTableHeader } from "./MyGridForumTableHeader/MyGridForumTableHeader";
 import { MyGridForumTableRow } from "./MyGridForumTableRow/MyGridForumTableRow";
 import { MyGridTopicHeader } from "./MyGridTopicHeader/MyGridTopicHeader";
+import { MyGridTopicTableRow } from './MyGridTopicTableRow/MyGridTopicTableRow';
 
 export const MyGridTable: FC<{data: {forums: IForum[], isForum: boolean, themes: any[]}}> = ({data}) => {
 
-  console.log(data)
+  
 
   const [mode, setMode] = useState<'FORUM' | 'THEME'>('FORUM');
 
   useEffect(() => {
+    console.log(data)
     if (data.themes.length > 0) {
       setMode('THEME');
+    } else {
+      setMode('FORUM');
     }
-  });
+  }, [data]);
  
   return (
     <>
@@ -27,6 +31,7 @@ export const MyGridTable: FC<{data: {forums: IForum[], isForum: boolean, themes:
       {mode === 'THEME' && <>
         <div className='p-[10px]'>
           <MyGridTopicHeader />
+          {data.themes.map(theme => <MyGridTopicTableRow key={theme.id} dataItem={theme} />)}
         </div>
       </>}
     </>

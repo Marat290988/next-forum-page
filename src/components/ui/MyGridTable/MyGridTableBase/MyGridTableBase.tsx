@@ -29,6 +29,7 @@ export const MyGridTableBase: FC<{cssClass?: string, myGridData: MyGridType[], i
               <Link
                 key={gr.value}
                 href={`/${gr.linkBase}=${id}`}
+                shallow={true}
               >
                 <div
                   style={!!gr.style ? gr.style : {}}
