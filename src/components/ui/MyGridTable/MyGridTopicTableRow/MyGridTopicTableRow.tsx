@@ -12,7 +12,6 @@ export type TopicType = {
 }
 
 export const MyGridTopicTableRow: FC<{dataItem: TopicType}> = ({ dataItem }) => {
-  console.log(dataItem)
 
   const date = moment(dataItem.createdAt).format('HH:mm DD.MM.YYYY')
 
@@ -31,8 +30,9 @@ export const MyGridTopicTableRow: FC<{dataItem: TopicType}> = ({ dataItem }) => 
       paddingBottom: '3px',
       borderRight: '2px solid var(--borderc)',
       borderBottom: '1px solid var(--borderc)',
-      cursor: 'pointer'
-    }},
+      cursor: 'pointer',
+      height: '31.8px'
+    }, isLink: true, linkBase: 'topic?t'},
     {value: dataItem.authorTheme.name, gridColumns: 'minmax(100px, 150px)', style: {
       textAlign: 'center',
       paddingTop: '4px',

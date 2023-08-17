@@ -12,7 +12,6 @@ export const MyGridTable: FC<{data: {forums: IForum[], isForum: boolean, themes:
   const [mode, setMode] = useState<'FORUM' | 'THEME'>('FORUM');
 
   useEffect(() => {
-    console.log(data)
     if (data.themes.length > 0) {
       setMode('THEME');
     } else {
