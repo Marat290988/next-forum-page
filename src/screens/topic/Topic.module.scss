@@ -1,0 +1,18 @@
+.image {
+  width: 200px;
+  height: 200px;
+  background-image: url(../../../public/pics/user_pic.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+.main {
+  padding: 15px 0;
+  flex-grow: 1;
+}
+
+.comment-section {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}

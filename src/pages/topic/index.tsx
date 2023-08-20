@@ -1,23 +1,32 @@
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { axiosReq } from '@/axios/api';
+import { Topic } from "@/screens/topic/Topic";
 
-export interface IForum {
+export interface IComment {
+  authorCommentId: number,
+  createdAt: string,
   id: number,
-  name: string,
-  children: IForum[]
+  isPrimary: 'Y' | 'N',
+  quoteCommentId: number | null,
+  text: string,
+  updatedAt: string
 }
 
-const TopicPage = (props: {forum: IForum}) => {
-  // const title = `${props.forum.name} - Next Forum`;
+const TopicPage = (props: {data: {comments: IComment[], topic: {forumId: number, id: number, title: string}}}) => {
+  const title = `${props.data.topic.title} - Next Forum`;
   console.log(props)
   return (
     <>
       <Head>
-        <title>Topic</title>
+        <title>{title}</title>
       </Head>
       <>
-        TOPIC
+        <Topic 
+          topicId={props.data.topic.id}
+          forumId={props.data.topic.forumId}
+          comments={props.data.comments}
+        />
       </>
     </>
   );
