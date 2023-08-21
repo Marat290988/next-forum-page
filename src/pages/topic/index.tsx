@@ -10,7 +10,8 @@ export interface IComment {
   isPrimary: 'Y' | 'N',
   quoteCommentId: number | null,
   text: string,
-  updatedAt: string
+  updatedAt: string,
+  authorComment: {name: string, createdAt: string}
 }
 
 const TopicPage = (props: {data: {comments: IComment[], topic: {forumId: number, id: number, title: string}}}) => {

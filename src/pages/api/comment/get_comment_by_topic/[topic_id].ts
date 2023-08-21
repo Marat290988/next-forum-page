@@ -35,6 +35,12 @@ export default async function handler(
         select: {
           id: true,
           authorCommentId: true,
+          authorComment: {
+            select: {
+              name: true,
+              createdAt: true
+            }
+          },
           createdAt: true,
           updatedAt: true,
           isPrimary: true,

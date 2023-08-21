@@ -9,3 +9,41 @@
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
+
+.profile-card {
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0;
+  border: 1px solid var(--borderc);
+  border-top: none;
+
+  .profile-name {
+    margin-bottom: 5px;
+    background-color: var(--blue02);
+    font-size: 14px;
+    line-height: 14px;
+    padding: 3px 8px;
+    width: calc(100% - 18px);
+    text-align: center;
+    border-radius: 2px;
+    color: var(--darkbl);
+    font-weight: 700;
+  }
+
+  .profile-exp {
+    margin-top: 5px;
+    font-size: 12px;
+    width: calc(100% - 18px);
+  }
+}
+
+.image {
+  width: 180px;
+  height: 180px;
+  background-image: url(../../../../public/pics/user_pic.jpg);
+  background-size: cover;
+  background-position: center;
+  border-radius: 5px;
+}
