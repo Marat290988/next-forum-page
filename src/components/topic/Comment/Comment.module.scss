@@ -1,5 +1,5 @@
 .comment-main-container {
-
+  margin-bottom: 0.8rem;
 }
 
 .comment-top {
@@ -62,6 +62,8 @@
   flex-grow: 1;
   border-right: 1px solid var(--borderc);
   border-bottom: 1px solid var(--borderc);
+  display: flex;
+  flex-direction: column;
 
   .comment-date {
     font-size: 10px;
@@ -74,5 +76,19 @@
     padding: 2px 5px;
     font-size: 14px;
     color: var(--fontcolor2);
+  }
+
+  .comment-bottom {
+    border-top: 1px solid var(--borderc);
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    height: 32px;
+    justify-content: flex-end;
+    padding-right: 15px;
+  }
+
+  :global(.MuiSvgIcon-root) {
+    fill: var(--blue02);
   }
 }

@@ -45,10 +45,20 @@ export default async function handler(
           updatedAt: true,
           isPrimary: true,
           text: true,
-          quoteCommentId: true
+          quoteCommentId: true,
+          likes: {
+            select: {
+              valueLike: true
+            }
+          }
         }
       });
       comments.forEach(async (c: any) => {
+
+        const result = c.likes.reduce(function(sum: number, current: {valueLike: number}) {
+          return sum + current.valueLike;
+        }, 0);
+        c['avg'] = result / c.likes.length;        
         if (c.quoteCommentId) {
           let qComment = await prisma.comment.findMany({
             where: {

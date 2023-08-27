@@ -11,7 +11,8 @@ export interface IComment {
   quoteCommentId: number | null,
   text: string,
   updatedAt: string,
-  authorComment: {name: string, createdAt: string}
+  authorComment: {name: string, createdAt: string},
+  avg?: number
 }
 
 const TopicPage = (props: {data: {comments: IComment[], topic: {forumId: number, id: number, title: string}}}) => {
@@ -36,7 +37,7 @@ const TopicPage = (props: {data: {comments: IComment[], topic: {forumId: number,
 export default TopicPage;
 
 export const getServerSideProps: GetServerSideProps<any> = async (context: GetServerSidePropsContext) => {
-  console.log(`${new Date().getHours()} : ${new Date().getMinutes()} : ${new Date().getSeconds()}`)
+  const date1 = new Date();
   const response = await axiosReq({
     url: process.env.NEXT_PUBLIC_SITE_URL + '/comment/get_comment_by_topic/' + context.query.t
   });
@@ -45,7 +46,9 @@ export const getServerSideProps: GetServerSideProps<any> = async (context: GetSe
   if (response?.data) {
     data = response.data;
   }
-  console.log(`${new Date().getHours()} : ${new Date().getMinutes()} : ${new Date().getSeconds()}`)
+  const date2 = new Date();
+  const delta = date2.getTime() - date1.getTime();
+  console.log(delta/1000 + ' sec');
 
   return {
     props: {

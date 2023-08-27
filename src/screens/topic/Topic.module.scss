@@ -3,8 +3,17 @@
   flex-grow: 1;
 }
 
-.comment-section {
+.section {
   max-width: 1400px;
   width: 100%;
   margin: 0 auto;
+}
+
+.button {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px;
+  margin-top: 10px;
+  border-radius: 5px;
+  background-color: var(--borderc);
 }
