@@ -15,16 +15,21 @@ export const MyEditor: FC<{handleChangeEditorVal: (val: string) => void}> = ({ h
     EditorState.createEmpty()
   );
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   handleChangeEditorVal(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+  // }, [editorState]);
+
+  const handleEditorChange = (state: EditorState) => {
+    setEditorState(state);
     handleChangeEditorVal(draftToHtml(convertToRaw(editorState.getCurrentContent())));
-  }, [editorState]);
+  };
   
   return (
     <>
       <div className={styles["editor-cont"]}>
         <Editor
           editorState={editorState}
-          onEditorStateChange={setEditorState}
+          onEditorStateChange={handleEditorChange}
           toolbar={{
             options: ['inline', 'textAlign', 'link', 'emoji']
           }}

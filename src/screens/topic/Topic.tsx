@@ -8,11 +8,13 @@ import { MyEditor } from './../../components/ui/MyEditor/MyEditor';
 import { MyButton } from '@/components/ui/MyButton/MyButton';
 import { useState } from 'react';
 import { CommentService } from '@/services/comment.service';
+import { ToastContainer, toast } from 'react-toastify';
 
 export const Topic: FC<{topicId: number, forumId: number, comments: IComment[]}> = (props) => {
 
   const { topicId, forumId, comments } = props;
   const [text, setText] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const user = useAuth();
 
@@ -21,15 +23,31 @@ export const Topic: FC<{topicId: number, forumId: number, comments: IComment[]}>
   };
 
   const sendComment = () => {
+    setIsLoading(true);
     CommentService.sendComment(text, topicId, forumId).then(res => {
-      console.log(res)
+      
+    }).catch(e => {
+      toast.error(e.response.data.message);
+    }).finally(() => {
+      setIsLoading(false);
     })
-    console.log(111)
   }
 
   return (
     <>
       <Header user={user} />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <main className={styles['main']}>
         <section className={styles['section']}>
           {comments.map(c => <Comment comment={c} key={c.id} />)}
@@ -40,7 +58,7 @@ export const Topic: FC<{topicId: number, forumId: number, comments: IComment[]}>
             <MyButton 
               type="submit" 
               canClick={true} 
-              isLoading={false}
+              isLoading={isLoading}
               buttonClick={sendComment}
             >
               SEND
