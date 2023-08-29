@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import styles from './Topic.module.scss';
 import { useAuth } from '@/hooks/useAuth';
 import { Header } from '@/components/header/Header';
@@ -12,26 +12,48 @@ import { ToastContainer, toast } from 'react-toastify';
 
 export const Topic: FC<{topicId: number, forumId: number, comments: IComment[]}> = (props) => {
 
-  const { topicId, forumId, comments } = props;
+  const { topicId, forumId } = props;
+  let { comments } = props;
   const [text, setText] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
+  const [commentState, setCommentState] = useState<IComment[]>(comments);
 
   const user = useAuth();
+  const [canShow, setCanShow] = useState(false);
 
   const handleChangeEditorVal = (val: string) => {
     setText(val);
   };
 
+  const childRef = useRef<any>(null);
+
   const sendComment = () => {
     setIsLoading(true);
     CommentService.sendComment(text, topicId, forumId).then(res => {
-      
+      CommentService.getCommentsByTopicId(topicId).then((res: {comments: IComment[]}) => {
+        setCommentState(res.comments);
+        setIsLoading(false);
+        clear();
+      }).catch(() => {
+        toast.error('Problems with network.');
+      })
     }).catch(e => {
-      toast.error(e.response.data.message);
-    }).finally(() => {
       setIsLoading(false);
+      toast.error(e.response.data.message);
     })
   }
+
+  const clear = () => {
+    if (childRef.current) {
+      childRef.current.clear();
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      setCanShow(true);
+    }
+  }, [user])
 
   return (
     <>
@@ -50,21 +72,21 @@ export const Topic: FC<{topicId: number, forumId: number, comments: IComment[]}>
       />
       <main className={styles['main']}>
         <section className={styles['section']}>
-          {comments.map(c => <Comment comment={c} key={c.id} />)}
+          {commentState.map(c => <Comment comment={c} key={c.id} />)}
         </section>
-        <section className={styles['section']}>
-          <MyEditor handleChangeEditorVal={handleChangeEditorVal} />
+        {canShow && <section className={styles['section']} >
+          <MyEditor handleChangeEditorVal={handleChangeEditorVal} ref={childRef} />
           <div className={styles['button']}>
             <MyButton 
               type="submit" 
-              canClick={true} 
+              canClick={text.length > 10} 
               isLoading={isLoading}
               buttonClick={sendComment}
             >
               SEND
             </MyButton>
           </div>
-        </section>
+        </section>}
       </main>
     </>
   )

@@ -1,4 +1,5 @@
 import { LoaderLayout } from "@/layouts/LoaderLayout/LoaderLayout";
+import { ModalLayout } from "@/layouts/ModalLayout/ModalLayout";
 import { store } from "@/store/store";
 import "@/styles/ReactToastify.scss";
 import "@/styles/globals.scss";
@@ -13,7 +14,9 @@ export default function App({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <LoaderLayout>
-          <Component {...pageProps} />
+          <ModalLayout>
+            <Component {...pageProps} />
+          </ModalLayout>
         </LoaderLayout>
       </Provider>
     </QueryClientProvider>

@@ -9,4 +9,11 @@ export class CommentService {
     });
     return response.data;
   }
+
+  static async getCommentsByTopicId(topicId: number) {
+    const response = await axiosReq({
+      url: '/comment/get_comment_by_topic/' + topicId
+    });
+    return response.data;
+  }
 }
