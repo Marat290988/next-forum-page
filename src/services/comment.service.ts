@@ -16,4 +16,12 @@ export class CommentService {
     });
     return response.data;
   }
+
+  static async deleteCommentByid(commentdId: number) {
+    const response = await axiosReq({
+      url: '/comment/delete/' + commentdId,
+      method: 'DELETE'
+    });
+    return response.data;
+  }
 }

@@ -30,16 +30,20 @@ export const Topic: FC<{topicId: number, forumId: number, comments: IComment[]}>
   const sendComment = () => {
     setIsLoading(true);
     CommentService.sendComment(text, topicId, forumId).then(res => {
-      CommentService.getCommentsByTopicId(topicId).then((res: {comments: IComment[]}) => {
-        setCommentState(res.comments);
-        setIsLoading(false);
-        clear();
-      }).catch(() => {
-        toast.error('Problems with network.');
-      })
+      updateComment();
     }).catch(e => {
       setIsLoading(false);
       toast.error(e.response.data.message);
+    })
+  }
+
+  const updateComment = () => {
+    CommentService.getCommentsByTopicId(topicId).then((res: {comments: IComment[]}) => {
+      setCommentState(res.comments);
+      setIsLoading(false);
+      clear();
+    }).catch(() => {
+      toast.error('Problems with network.');
     })
   }
 
@@ -72,7 +76,7 @@ export const Topic: FC<{topicId: number, forumId: number, comments: IComment[]}>
       />
       <main className={styles['main']}>
         <section className={styles['section']}>
-          {commentState.map(c => <Comment comment={c} key={c.id} />)}
+          {commentState.map(c => <Comment comment={c} updateComment={updateComment} key={c.id} />)}
         </section>
         {canShow && <section className={styles['section']} >
           <MyEditor handleChangeEditorVal={handleChangeEditorVal} ref={childRef} />
