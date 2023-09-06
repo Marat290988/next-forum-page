@@ -37,4 +37,24 @@ export class ForumService {
     });
     return response.data;
   }
+  static async deleteTopic(topicId: number) {
+    const response = await axiosReq({
+      url: '/forum/delete_topic/' + topicId,
+      method: 'DELETE'
+    });
+    return response.data;
+  }
+  static async deleteForum(forumId: number) {
+    const response = await axiosReq({
+      url: '/forum/delete_forum/' + forumId,
+      method: 'DELETE'
+    });
+    return response.data;
+  }
+  static async getForumsBySection(sectionId: number) {
+    const response = await axiosReq({
+      url: `/forum/${sectionId}`
+    });
+    return response.data.forums;
+  }
 }

@@ -15,4 +15,11 @@ export class SectionService {
     });
     return response.data.sections;
   }
+  static async deleteSection(sectionId: number) {
+    const response = await axiosReq({
+      url: '/section/delete_section/' + sectionId,
+      method: 'DELETE'
+    });
+    return response.data;
+  }
 }

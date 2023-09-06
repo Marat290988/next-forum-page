@@ -20,9 +20,11 @@ export const MyEditor = forwardRef((props: any, ref: any) => {
     props.handleChangeEditorVal(draftToHtml(convertToRaw(state.getCurrentContent())));
   };
 
-  ref.current = {clear: () => {
-    setEditorState(EditorState.createEmpty());
-  }}
+  if (ref) {
+    ref.current = {clear: () => {
+      setEditorState(EditorState.createEmpty());
+    }}
+  }
 
   return (
     <>

@@ -7,7 +7,9 @@ export type MyGridType = {
   style?: Record<string, string>,
   icon?: ReactNode,
   isLink?: boolean,
-  linkBase?: string
+  linkBase?: string,
+  canClick?: boolean,
+  clickFunc?: () => void
 }
 
 export const MyGridTableBase: FC<{cssClass?: string, myGridData: MyGridType[], id?: number}> = ({cssClass, myGridData, id}) => {
@@ -43,6 +45,7 @@ export const MyGridTableBase: FC<{cssClass?: string, myGridData: MyGridType[], i
               <div
                 key={gr.value}
                 style={!!gr.style ? gr.style : {}}
+                onClick={() => {gr.canClick && gr.clickFunc && gr.clickFunc()}}
               >
                 {gr.icon ? gr.icon : <>{gr.value}</>}
               </div>

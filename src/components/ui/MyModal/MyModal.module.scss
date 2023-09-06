@@ -1,0 +1,16 @@
+.modal {
+  position: fixed;
+  z-index: 1001;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .modal-container {
+    padding: 12px;
+    background-color: var(--dark02);
+    border-radius: 5px;
+    border: 2px solid var(--borderc);
+  }
+}
