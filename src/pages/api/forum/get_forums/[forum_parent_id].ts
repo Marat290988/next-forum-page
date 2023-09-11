@@ -37,6 +37,7 @@ export default async function handler(
             select: {
               id: true,
               createdAt: true,
+              updatedAt: true,
               authorTheme: {
                 select: {
                   id: true,
@@ -44,6 +45,9 @@ export default async function handler(
                 }
               },
               title: true
+            },
+            orderBy: {
+              updatedAt: 'desc'
             }
           });
         }

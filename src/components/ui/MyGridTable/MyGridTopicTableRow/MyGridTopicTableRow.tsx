@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 
 export type TopicType = {
   createdAt: string,
+  updatedAt: string,
   authorTheme: { id: number, name: string },
   id: number,
   title: string
@@ -19,7 +20,8 @@ export type TopicType = {
 
 export const MyGridTopicTableRow: FC<{ dataItem: TopicType, canShow: boolean, setTopics: Dispatch<SetStateAction<any[]>> }> = ({ dataItem, canShow, setTopics }) => {
 
-  const date = moment(dataItem.createdAt).format('HH:mm DD.MM.YYYY');
+  const date = moment(dataItem.createdAt).format('HH:mm') + ' [' + moment(dataItem.createdAt).format('DD.MM.YYYY') + ']';
+  const dateUp = moment(dataItem.updatedAt).format('HH:mm') + ' [' + moment(dataItem.updatedAt).format('DD.MM.YYYY') + ']';
 
   const { switchOn, switchOff, setLoadingWithParam } = useActions();
 
@@ -78,6 +80,17 @@ export const MyGridTopicTableRow: FC<{ dataItem: TopicType, canShow: boolean, se
         paddingBottom: '3px',
         borderRight: '2px solid var(--borderc)',
         borderBottom: '1px solid var(--borderc)'
+      }
+    },
+    {
+      value: dateUp, gridColumns: 'minmax(100px, 150px)', style: {
+        textAlign: 'center',
+        paddingTop: '4px',
+        paddingLeft: '4px',
+        paddingBottom: '3px',
+        borderRight: '2px solid var(--borderc)',
+        borderBottom: '1px solid var(--borderc)',
+        fontSize: '13px'
       }
     },
     {

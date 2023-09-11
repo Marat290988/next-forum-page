@@ -29,6 +29,14 @@ export const MyGridTopicHeader: FC<{canShow: boolean}> = ({canShow}) => {
       borderRight: '2px solid var(--borderc)',
       borderBottom: '1px solid var(--borderc)'
     }},
+    {value: 'Last Message', gridColumns: 'minmax(100px, 150px)', style: {
+      textAlign: 'center',
+      paddingTop: '4px',
+      paddingLeft: '4px',
+      paddingBottom: '3px',
+      borderRight: '2px solid var(--borderc)',
+      borderBottom: '1px solid var(--borderc)'
+    }},
     {value: 'Date', gridColumns: 'minmax(100px, 150px)', style: {
       textAlign: 'center',
       paddingTop: '4px',

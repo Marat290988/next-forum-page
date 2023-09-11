@@ -1,5 +1,6 @@
 import { Prisma } from '@/utils/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
+import QueryString from 'qs';
 
 export default async function handler(
   req: NextApiRequest,
@@ -14,8 +15,17 @@ export default async function handler(
     const topic_id = Number.parseInt(req.query.topic_id as string);
     const prisma = Prisma.getPrisma();
 
+    const rawParams = req.url?.split('?')[1];
+    const params = QueryString.parse(rawParams as string);
+    
+    const page = +params.p!;
+    const qtyComment = +params.c!;
+
+    const skip = page * qtyComment;
+
     let topic;
     let comments;
+    let totalComment;
 
     try {
       topic = await prisma.theme.findUnique({
@@ -28,7 +38,12 @@ export default async function handler(
           forumId: true
         }
       });
+      totalComment = await prisma.comment.count({
+        where: {themeId: topic_id}
+      });
       comments = await prisma.comment.findMany({
+        skip: skip,
+        take: qtyComment,
         where: {
           themeId: topic_id
         },
@@ -83,5 +98,5 @@ export default async function handler(
       return;
     }
 
-    res.status(200).json({message: 'OK.', topic, comments});
+    res.status(200).json({message: 'OK.', topic, comments, totalComment});
   }

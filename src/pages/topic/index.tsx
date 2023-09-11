@@ -15,7 +15,7 @@ export interface IComment {
   avg?: number
 }
 
-const TopicPage = (props: {data: {comments: IComment[], topic: {forumId: number, id: number, title: string}}}) => {
+const TopicPage = (props: {data: {comments: IComment[], topic: {forumId: number, id: number, title: string}, totalComment: number}}) => {
   const title = `${props.data.topic.title} - Next Forum`;
   console.log(props)
   return (
@@ -28,6 +28,7 @@ const TopicPage = (props: {data: {comments: IComment[], topic: {forumId: number,
           topicId={props.data.topic.id}
           forumId={props.data.topic.forumId}
           comments={props.data.comments}
+          totalPage={props.data.totalComment}
         />
       </>
     </>
@@ -38,8 +39,9 @@ export default TopicPage;
 
 export const getServerSideProps: GetServerSideProps<any> = async (context: GetServerSidePropsContext) => {
   const date1 = new Date();
+  console.log(context.query)
   const response = await axiosReq({
-    url: process.env.NEXT_PUBLIC_SITE_URL + '/comment/get_comment_by_topic/' + context.query.t
+    url: process.env.NEXT_PUBLIC_SITE_URL + `/comment/get_comment_by_topic/${context.query.t}?p=${context.query.p}&c=${context.query.c}`
   });
 
   let data = null;

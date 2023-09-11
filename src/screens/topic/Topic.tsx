@@ -10,13 +10,16 @@ import { useState } from 'react';
 import { CommentService } from '@/services/comment.service';
 import { ToastContainer, toast } from 'react-toastify';
 
-export const Topic: FC<{topicId: number, forumId: number, comments: IComment[]}> = (props) => {
+export const Topic: FC<{topicId: number, forumId: number, comments: IComment[], totalPage: number}> = (props) => {
 
   const { topicId, forumId } = props;
+  const defaultQty = 3;
   let { comments } = props;
   const [text, setText] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
   const [commentState, setCommentState] = useState<IComment[]>(comments);
+  const [totalPage, setTotalPage] = useState(props.totalPage / defaultQty);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const user = useAuth();
   const [canShow, setCanShow] = useState(false);

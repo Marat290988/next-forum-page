@@ -33,6 +33,14 @@ export default async function handler(
           text: text
         }
       });
+      await prisma.theme.update({
+        where: {
+          id: themeId
+        },
+        data: {
+          updatedAt: new Date()
+        }
+      })
     } catch(e) {
       res.status(422).json({message: 'Problems with DB.'});
       prisma.$disconnect();
