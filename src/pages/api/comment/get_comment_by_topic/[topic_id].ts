@@ -16,12 +16,19 @@ export default async function handler(
     const prisma = Prisma.getPrisma();
 
     const rawParams = req.url?.split('?')[1];
-    const params = QueryString.parse(rawParams as string);
-    
-    const page = +params.p!;
-    const qtyComment = +params.c!;
 
-    const skip = page * qtyComment;
+    let qtyComment = 3;
+    let skipTake = {};
+
+    if (rawParams) {
+      const params = QueryString.parse(rawParams as string);
+      const page = +params.p!;
+      // qtyComment = +params.c!;
+      const skip = page * qtyComment;
+      if (page && skip) {
+        skipTake = { skip, take:  qtyComment};
+      }
+    }
 
     let topic;
     let comments;
@@ -42,7 +49,7 @@ export default async function handler(
         where: {themeId: topic_id}
       });
       comments = await prisma.comment.findMany({
-        skip: skip,
+        ...skipTake,
         take: qtyComment,
         where: {
           themeId: topic_id

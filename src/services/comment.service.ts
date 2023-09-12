@@ -10,9 +10,9 @@ export class CommentService {
     return response.data;
   }
 
-  static async getCommentsByTopicId(topicId: number) {
+  static async getCommentsByTopicId(topicId: number, page = 0, comment = 10) {
     const response = await axiosReq({
-      url: '/comment/get_comment_by_topic/' + topicId
+      url: '/comment/get_comment_by_topic/' + topicId + `?p=${page}&c=${comment}`
     });
     return response.data;
   }

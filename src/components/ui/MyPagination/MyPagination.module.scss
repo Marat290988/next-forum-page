@@ -1,0 +1,23 @@
+.my-pagination {
+  :global(ul) {
+    display: flex;
+    margin-top: 8px;
+    justify-content: flex-end;
+  }
+
+  :global(li) {
+    background-color: var(--dark03);
+    min-width: 25px;
+    padding: 0 3px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    margin-right: 3px;
+  }
+
+  :global(li.selected) {
+    background-color: var(--blue02);
+  }
+}

@@ -9,7 +9,8 @@ export type MyGridType = {
   isLink?: boolean,
   linkBase?: string,
   canClick?: boolean,
-  clickFunc?: () => void
+  clickFunc?: () => void,
+  id?: number
 }
 
 export const MyGridTableBase: FC<{cssClass?: string, myGridData: MyGridType[], id?: number}> = ({cssClass, myGridData, id}) => {
@@ -29,8 +30,8 @@ export const MyGridTableBase: FC<{cssClass?: string, myGridData: MyGridType[], i
           if (gr.isLink) {
             return (
               <Link
-                key={gr.value}
-                href={`/${gr.linkBase}=${id}`}
+                key={gr.id ? gr.id : Math.random()}
+                href={`/${gr.linkBase}=${id}&p=0&c=3`}
                 shallow={true}
               >
                 <div
@@ -43,7 +44,7 @@ export const MyGridTableBase: FC<{cssClass?: string, myGridData: MyGridType[], i
           } else {
             return (
               <div
-                key={gr.value}
+                key={gr.id ? gr.id : Math.random()}
                 style={!!gr.style ? gr.style : {}}
                 onClick={() => {gr.canClick && gr.clickFunc && gr.clickFunc()}}
               >

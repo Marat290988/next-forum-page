@@ -9,6 +9,8 @@ import { MyButton } from '@/components/ui/MyButton/MyButton';
 import { useState } from 'react';
 import { CommentService } from '@/services/comment.service';
 import { ToastContainer, toast } from 'react-toastify';
+import { MyPagination } from '@/components/ui/MyPagination/MyPagination';
+import { useQuery } from 'react-query';
 
 export const Topic: FC<{topicId: number, forumId: number, comments: IComment[], totalPage: number}> = (props) => {
 
@@ -50,11 +52,23 @@ export const Topic: FC<{topicId: number, forumId: number, comments: IComment[], 
     })
   }
 
+  const parentPaginationHandle = (event: { selected: number }) => {
+    const { data, isLoading, refetch } = useQuery(
+      ["forum", topicId, event.selected],
+      (): Promise<{ }> =>
+        CommentService.getCommentsByTopicId(topicId, event.selected)
+    );
+  }
+
   const clear = () => {
     if (childRef.current) {
       childRef.current.clear();
     }
   };
+
+  useEffect(() => {
+    console.log(commentState)
+  }, [commentState])
 
   useEffect(() => {
     if (user) {
@@ -94,6 +108,13 @@ export const Topic: FC<{topicId: number, forumId: number, comments: IComment[], 
             </MyButton>
           </div>
         </section>}
+        <section className={styles['section']}>
+          <MyPagination
+            qtyPerPage={defaultQty}
+            totalPage={props.totalPage}
+            parentPaginationHandle={parentPaginationHandle}
+          />
+        </section>
       </main>
     </>
   )
