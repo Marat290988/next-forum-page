@@ -1,0 +1,35 @@
+.nav {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 10px;
+  background-color: var(--darkbl);
+  padding: 5px 8px;
+  border-radius: 3px;
+
+  ul {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .nav-item {
+    background-color: var(--borderc);
+    clip-path: polygon(0% 0%, calc(100% - 10px) 0%, 100% 50%, calc(100% - 10px) 100%, 0% 100%);
+    padding: 1px;
+    border-radius: 3px;
+  }
+
+  .nav-item-title {
+    background-color: var(--dark02);
+    clip-path: polygon(0% 0%, calc(100% - 10px) 0%, 100% 50%, calc(100% - 10px) 100%, 0% 100%);
+    padding: 0 15px 0px 8px;
+    border-radius: 3px;
+  }
+
+  .nav-item-title.next {
+    padding-left: 15px;
+  }
+}
+

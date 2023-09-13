@@ -1,5 +1,5 @@
 import styles from "./MyEditor.module.scss";
-import { EditorState, convertToRaw } from "draft-js";
+import { ContentBlock, ContentState, EditorState, convertFromHTML, convertToRaw } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import dynamic from "next/dynamic";
 import { FC, useState,useEffect, Ref, useImperativeHandle, forwardRef } from "react";
@@ -22,7 +22,7 @@ export const MyEditor = forwardRef((props: any, ref: any) => {
 
   if (ref) {
     ref.current = {clear: () => {
-      setEditorState(EditorState.createEmpty());
+      setEditorState(EditorState.createWithContent(ContentState.createFromText('')));
     }}
   }
 

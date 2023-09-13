@@ -10,6 +10,7 @@ import { ForumService } from "@/services/forum.service";
 import { FC, useRef, useState, useEffect, FormEvent } from "react";
 import { toast, ToastContainer } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import { Navigation } from "@/components/navigation/Navigation";
 
 export const NewTopic: FC<{ createTopServerData: CreateTopic }> = ({
   createTopServerData,
@@ -67,6 +68,7 @@ export const NewTopic: FC<{ createTopServerData: CreateTopic }> = ({
   return (
     <>
       <Header user={user} />
+      <Navigation />
       <ToastContainer
         position="top-right"
         autoClose={5000}

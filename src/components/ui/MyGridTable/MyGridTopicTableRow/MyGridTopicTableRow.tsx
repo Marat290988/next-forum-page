@@ -99,7 +99,8 @@ export const MyGridTopicTableRow: FC<{ dataItem: TopicType, canShow: boolean, se
         paddingTop: '4px',
         paddingLeft: '4px',
         paddingBottom: '3px',
-        borderBottom: '1px solid var(--borderc)'
+        borderBottom: '1px solid var(--borderc)',
+        fontSize: '13px'
       }
     }
   ]

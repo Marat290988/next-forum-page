@@ -31,7 +31,7 @@ export const MyGridTableBase: FC<{cssClass?: string, myGridData: MyGridType[], i
             return (
               <Link
                 key={gr.id ? gr.id : Math.random()}
-                href={`/${gr.linkBase}=${id}&p=0&c=3`}
+                href={`/${gr.linkBase}=${id}&p=0&c=10`}
                 shallow={true}
               >
                 <div

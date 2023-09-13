@@ -1,3 +1,4 @@
+import { Navigation } from "@/components/navigation/Navigation";
 import { MyGridTable } from "./../../components/ui/MyGridTable/MyGridTable";
 import { IForum } from "./../../pages/forum/index";
 import styles from "./Forum.module.scss";
@@ -49,6 +50,7 @@ export const Forum: FC<{ forum?: IForum; name: string }> = ({
   return (
     <>
       <Header user={user} />
+      <Navigation />
       <main className={styles.main}>
         <div className="main-container">
           <div className="px-[10px]">

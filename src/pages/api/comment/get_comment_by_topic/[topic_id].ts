@@ -17,7 +17,7 @@ export default async function handler(
 
     const rawParams = req.url?.split('?')[1];
 
-    let qtyComment = 3;
+    let qtyComment = 10;
     let skipTake = {};
 
     if (rawParams) {

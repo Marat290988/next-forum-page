@@ -2,9 +2,9 @@ import { FC } from 'react';
 import styles from './MyPagination.module.scss';
 import ReactPaginate from 'react-paginate';
 
-export const MyPagination: FC<{qtyPerPage: number, totalPage: number, parentPaginationHandle: (event: { selected: number }) => void}> = 
+export const MyPagination: FC<{qtyPerPage: number, totalPage: number, parentPaginationHandle: (event: { selected: number }) => void, initialPage: number | undefined}> = 
 
-({ qtyPerPage, totalPage, parentPaginationHandle }) => {
+({ qtyPerPage, totalPage, parentPaginationHandle, initialPage }) => {
 
   const handlePageClick = (event: { selected: number }) => {
     parentPaginationHandle(event);
@@ -12,13 +12,13 @@ export const MyPagination: FC<{qtyPerPage: number, totalPage: number, parentPagi
 
   return (
     <div className={styles['my-pagination']}>
-      <ReactPaginate
-        pageCount={Math.floor(totalPage / qtyPerPage)}
-        initialPage={0}
+      {typeof initialPage === 'number' && <ReactPaginate
+        pageCount={Math.ceil(totalPage / qtyPerPage)}
+        initialPage={initialPage}
         onPageChange={handlePageClick}
         nextLabel=">"
         previousLabel="<"
-      />
+      />}
     </div>
   )
 }
