@@ -54,7 +54,7 @@ export const NewTopic: FC<{ createTopServerData: CreateTopic }> = ({
     };
     try {
       const response = await ForumService.createTopic(data);
-      router.replace(`/forum?f=${createTopServerData.forumId}`)
+      router.replace(`/forum?f=${createTopServerData.forumId}&p=0&c=10`)
     } catch(e: any) {
       const errorText = e.response.data.message ? e.response.data.message : 'The endpoint does not exist.';
       toast.error(errorText);

@@ -19,7 +19,7 @@ export default async function handler(
 
     const { type, id } = req.body as NavReq;
     const prisma = Prisma.getPrisma();
-    const navData: {id: number, title: string}[] = [];
+    const navData: {id: number, title: string, url: string}[] = [];
 
     if (type === UrlPath.TOPIC) {
       let topic;
@@ -30,6 +30,7 @@ export default async function handler(
             id: +id
           }
         });
+        prisma.$disconnect();
       } catch (e) {
         res.status(422).json({message: 'Problems with DB.'});
         prisma.$disconnect();
@@ -37,63 +38,55 @@ export default async function handler(
       }
 
       if (topic) {
-        navData.unshift({id: +topic.id, title: topic.title})
+        navData.push({id: +topic.id, title: topic.title, url: `topic?t=${topic.id}&p=0&c=10`});
+        await buildTreeForum(topic.forumId, navData, res);
       }
 
+    } else if (type === UrlPath.FORUM) {
+      await buildTreeForum(+id, navData, res);
     }
 
-  }
-
-  const buildTreeForum = async (forumId: number, data: {id: number, title: string}[]) => {
+    res.status(200).json({nav: navData});
 
   }
 
-  // export const deleteForumTree = async (res: NextApiResponse, parentId: number): Promise<void> => {
-  //   const prisma = Prisma.getPrisma();
-  
-  //   let forums;
-  
-  //   try {
-  //     forums = await prisma.forum.findMany({
-  //       where: {
-  //         forumParentId: parentId
-  //       }
-  //     });
-  //   } catch(e) {
-  //     res.status(422).json({message: 'Problems with DB.'});
-  //     prisma.$disconnect();
-  //   }
-  
-  //   if (forums && forums.length > 0) {
-  //     forums.forEach(async f => {
-  //       await deleteForumTree(res, f.id);
-  //     });
-  //     await prisma.forum.delete({
-  //       where: {
-  //         id: parentId
-  //       }
-  //     });
-  //   } else {
-  //     try {
-  //       await prisma.comment.deleteMany({
-  //         where: {
-  //           forumId: parentId
-  //         }
-  //       });
-  //       await prisma.theme.deleteMany({
-  //         where: {
-  //           forumId: parentId
-  //         }
-  //       });
-  //       await prisma.forum.delete({
-  //         where: {
-  //           id: parentId
-  //         }
-  //       });
-  //     } catch(e) {
-  //       res.status(422).json({message: 'Problems with DB.'});
-  //       prisma.$disconnect();
-  //     }
-  //   }
-    
-  // }
+  const buildTreeForum = async (forumId: number, data: {id: number, title: string, url: string}[], res: NextApiResponse) => {
+    const prisma = Prisma.getPrisma();
+    let forum;
+    try {
+      forum = await prisma.forum.findUnique({
+        where: {
+          id: +forumId
+        }
+      });
+    } catch (e) {
+      res.status(422).json({message: 'Problems with DB.'});
+      prisma.$disconnect();
+      return;
+    }
+
+    if (forum) {
+      data.push({id: forum.id, title: forum.name, url: `forum?f=${forum.id}&p=0&c=10`});
+      if (forum.forumParentId) {
+        await buildTreeForum(forum.forumParentId, data, res);
+        prisma.$disconnect();
+      } else if (forum.parent) {
+        let section;
+        try {
+          section = await prisma.section.findUnique({
+            where: {
+              id: +forum.parent
+            }
+          });
+        } catch (e) {
+          res.status(422).json({message: 'Problems with DB.'});
+          prisma.$disconnect();
+          return;
+        }
+        if (section) {
+          data.push({id: section.id, title: section.name, url: ''});
+        }
+        prisma.$disconnect();
+      }
+    }
+  }

@@ -4,6 +4,8 @@ import { portalIds } from '@/pages/_document';
 import { createPortal } from 'react-dom';
 import { GridLoader } from 'react-spinners';
 import backdropStyle from '../../components/dropdown/DropDown.module.scss';
+import { useRouter } from 'next/router'
+import { useActions } from '@/hooks/useActions';
 
 export const LoaderLayout: FC<PropsWithChildren> = ({children}) => {
   
@@ -11,11 +13,23 @@ export const LoaderLayout: FC<PropsWithChildren> = ({children}) => {
   const refModal = useRef<Element | null>(null);
   const refBackdrop = useRef<Element | null>(null);
   const [mounted, setMounted] = useState(false);
+  const router = useRouter();
+  const { setLoadingWithParam } = useActions();
+  
   useEffect(() => {
     refModal.current = document.getElementById(`${portalIds.modal}`);
     refBackdrop.current = document.getElementById(`${portalIds.backdrop}`);
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    router.events.on('routeChangeStart', () => {
+      setLoadingWithParam(true);
+    });
+    router.events.on('routeChangeComplete', () => {
+      setLoadingWithParam(false);
+    });
+  }, [router])
 
   return (
     <>
