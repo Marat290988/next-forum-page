@@ -17,11 +17,11 @@ export class ForumService {
     });
     return response.data.forums;
   }
-  static async getForumsByForumParent(parentId: string | number): Promise<{forums: IForum[], isForum: boolean, themes: any[]}> {
+  static async getForumsByForumParent(parentId: string | number, page = 0, comment = 10): Promise<{forums: IForum[], isForum: boolean, themes: any[], totalRows: number}> {
     const response = await axiosReq({
-      url: `/forum/get_forums/${parentId}`
+      url: `/forum/get_forums/${parentId}` + `?p=${page}&c=${comment}`
     });
-    return {forums: response.data.forums, isForum: response.data.isForum, themes: response.data.themes};
+    return {forums: response.data.forums, isForum: response.data.isForum, themes: response.data.themes, totalRows: response.data.totalRows};
   }
   static async getForumById(forumId: string | number) {
     const response = await axiosReq({

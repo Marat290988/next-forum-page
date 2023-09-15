@@ -118,14 +118,14 @@ export const SectionItem: FC<{data: {name: string, id: number, forums: {name: st
         theme="dark"
       />
       {data.map(section => (
-        (section.forums.length > 0 || canShow) && <SectionWrapper title={section.name} key={section.id} sectionId={section.id} isAdmin={isAdmin} onDel={removeSectionModal} >
+        (section.forums.length > 0 || isAdmin) && <SectionWrapper title={section.name} key={section.id} sectionId={section.id} isAdmin={isAdmin} onDel={removeSectionModal} >
           <ul
             className={`${styles['forums-container']} p-[10px]`}
           >
             {section.forums.map(forum => (
               <Link 
                 key={forum.id} 
-                href={`/forum?f=${forum.id}`}
+                href={`/forum?f=${forum.id}&p=0&c=10`}
                 className={`
                   xl:w-[32%]
                   md:w-[48%]
@@ -139,11 +139,14 @@ export const SectionItem: FC<{data: {name: string, id: number, forums: {name: st
               </Link>
             ))}
           </ul>
-          <div
-            className={styles['section-content']}
-          >
-            {isShowAddForum && <AddForum sectionId={section.id} updateData={updateData} />}
-          </div>
+          {isShowAddForum && (          
+            <div
+              className={styles['section-content']}
+            >
+              <AddForum sectionId={section.id} updateData={updateData} />
+            </div>
+          )}
+
         </SectionWrapper>
       ))}
     </div>

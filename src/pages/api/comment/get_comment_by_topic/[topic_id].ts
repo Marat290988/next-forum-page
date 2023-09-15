@@ -25,7 +25,7 @@ export default async function handler(
       const page = +params.p!;
       // qtyComment = +params.c!;
       const skip = page * qtyComment;
-      if (page && skip) {
+      if (typeof page === 'number') {
         skipTake = { skip, take:  qtyComment};
       }
     }
