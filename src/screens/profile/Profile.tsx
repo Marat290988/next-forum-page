@@ -10,7 +10,13 @@ export const Profile: FC = () => {
   return (
     <>
       <Header user={user} />
-      <h3>PROFILE</h3>
+      <main className={`main-container ${styles['profile']}`}>
+        <div className={`flex mt-[10px] h-full p-[10px] ${styles['profile']}`}>
+          <div className={styles['left-card-profile']}>
+
+          </div>
+        </div>
+      </main>
     </>
   )
 }

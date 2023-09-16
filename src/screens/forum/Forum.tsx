@@ -37,6 +37,8 @@ export const Forum: FC<{ forum?: IForum; name: string }> = ({
   const defaultQty = 10;
   const [totalPage, setTotalPage] = useState<undefined | number>();
 
+  const effectIsLoading = useRef(false);
+
   const updateData = () => {
     setTotalPage(totalPage! + 1);
     if (totalPage! % defaultQty === 0) {
@@ -78,21 +80,23 @@ export const Forum: FC<{ forum?: IForum; name: string }> = ({
 
   useEffect(() => {
     if (router.query.p) {
+      effectIsLoading.current = true;
       const page: number = +router.query.p;
       setCurrentPage(page);
       setLoadingWithParam(true);
       currentPageMutation.current = getKeyFromSerachParam('p');
       refetch().then((res) => {
         setLoadingWithParam(false);
-        setTotalPage(data?.totalRows);
+        //setTotalPage(data?.totalRows);
+        effectIsLoading.current = false;
       });
     }
   }, [router.query.p, router.pathname])
 
   useEffect(() => {
-    setTotalPage(undefined);
-    setCurrentPage(undefined);
-    if (router.query.p && !isLoading) {
+    if (router.query.p && !effectIsLoading.current) {
+      setTotalPage(undefined);
+      setCurrentPage(undefined);
       const page: number = +router.query.p;
       setCurrentPage(page);
       setLoadingWithParam(true);
@@ -100,7 +104,7 @@ export const Forum: FC<{ forum?: IForum; name: string }> = ({
       currentPageMutation.current = getKeyFromSerachParam('p');
       refetch().then((res) => {
         setLoadingWithParam(false);
-        setTotalPage(data?.totalRows);
+        //setTotalPage(data?.totalRows);
       });
     }
   }, [router.query.f])
@@ -117,6 +121,7 @@ export const Forum: FC<{ forum?: IForum; name: string }> = ({
   const buttonClickHandle = () => {
     router.push("/new_topic?f=" + fId);
   };
+
   return (
     <>
       <Header user={user} />
