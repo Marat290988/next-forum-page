@@ -49,13 +49,12 @@ export const Navigation: FC = () => {
     }
   }, [router.query, router.pathname]);
 
-
   return (
     <>
       <nav className={styles['nav']}>
         <ul>
           {navData && navData.map((nav, i) => (
-            <li className="mr-[-12px]" key={nav.id}>
+            <li className="mr-[-12px]" key={nav.id + ' ' + i}>
               {i === navData.length - 1 && (
                 <div className={styles['nav-item']}>
                   <div className={`${styles['nav-item-title']} ${styles['next']}`}>{nav.title}</div>

@@ -60,7 +60,8 @@ export default async function handler(
           authorComment: {
             select: {
               name: true,
-              createdAt: true
+              createdAt: true,
+              imgUrl: true
             }
           },
           createdAt: true,

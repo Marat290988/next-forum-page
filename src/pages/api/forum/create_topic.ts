@@ -23,6 +23,7 @@ export default async function handler(
       verifyJWT(req.cookies['token'] as string);
     } catch(e) {
       res.status(403).json({message: 'Access is denied.'});
+      return;
     }
     
     const { authorId, title, forumId, text } = req.body as RequestCreateTopic;

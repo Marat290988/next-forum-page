@@ -27,6 +27,11 @@ export default async function handler(
     let like;
 
     try {
+      const comment = await prisma.comment.findUnique({
+        where: {
+          id: +commentId
+        }
+      });
       like = await prisma.likeF.findUnique({
         where: {
           likeIdentifier: {
@@ -48,7 +53,8 @@ export default async function handler(
                 id: +userId
               }
             },
-            valueLike: +stars
+            valueLike: +stars,
+            commentOwner: comment!.authorCommentId
           }
         })
       } else {

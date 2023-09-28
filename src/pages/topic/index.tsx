@@ -11,7 +11,7 @@ export interface IComment {
   quoteCommentId: number | null,
   text: string,
   updatedAt: string,
-  authorComment: {name: string, createdAt: string},
+  authorComment: {name: string, createdAt: string, imgUrl: string},
   avg?: number
 }
 

@@ -9,6 +9,7 @@ import { LikeService } from "@/services/like.service";
 import Rating from "@mui/material/Rating";
 import moment from "moment";
 import { IBM_Plex_Sans } from "next/font/google";
+import Link from "next/link";
 import { FC, SyntheticEvent, useEffect } from "react";
 import { useState } from "react";
 import { BsFillTrashFill } from "react-icons/bs";
@@ -113,12 +114,12 @@ export const Comment: FC<{ comment: IComment; updateComment: () => void }> = ({
       <div className="flex p-[1px]">
         <div className={styles["profile-card"]}>
           <p className={styles["profile-name"]}>{comment.authorComment.name}</p>
-          <div className={styles["image"]}></div>
+          <div className={styles["image"]} style={{backgroundImage: `url(${comment.authorComment.imgUrl}`}}></div>
           <p className={styles["profile-exp"]}>
             Experience:{" "}
             {calcTime(new Date(comment.authorComment.createdAt).getTime())}
           </p>
-          <p className={styles["profile-link"]}>PROFILE</p>
+          <Link href={'profile/' + comment.authorCommentId}><p className={styles["profile-link"]}>PROFILE</p></Link>
         </div>
 
         <div className={styles["comment-body"]}>

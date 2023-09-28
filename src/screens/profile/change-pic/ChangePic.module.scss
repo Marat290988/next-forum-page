@@ -1,0 +1,40 @@
+.remove-icon {
+  position: absolute;
+  right: 0;
+  font-size: 25px;
+  color: var(--blue02);
+  cursor: pointer;
+}
+
+.image {
+  width: 180px;
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 5px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+
+  .image-cover {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #13d47a28;
+    display: none;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    color: #11a16c;
+    font-size: 38px;
+
+    svg {
+      background-color: #ffffffa6;
+      border-radius: 50%;
+    }
+  }
+}
+
+.image:hover .image-cover {
+  display: flex;
+}

@@ -24,4 +24,11 @@ export class CommentService {
     });
     return response.data;
   }
+
+  static async getLastCommentByUserId(userId: number) {
+    const response = await axiosReq({
+      url: '/comment/get_last_comments_by_userid/' + userId
+    });
+    return response.data;
+  }
 }

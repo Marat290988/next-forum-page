@@ -1,21 +1,8 @@
 import { axiosReq } from "@/axios/api";
 import { Profile } from "@/screens/profile/Profile";
-import { decodePassedToken } from "@/utils/token";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import Head from "next/head";
-
-export interface ProfileData {
-  avgRating: number,
-  commentQ: number
-  themesQ: number,
-  user: {
-    createdAt: string,
-    email: string
-    imgUrl: string
-    name: string,
-    id: number
-  }
-}
+import { ProfileData } from ".";
 
 const ProfilePage = (props: {data: ProfileData}) => {
   return (
@@ -30,13 +17,10 @@ const ProfilePage = (props: {data: ProfileData}) => {
 
 export default ProfilePage;
 
-export const getServerSideProps: GetServerSideProps<{data: ProfileData}> = async (context: GetServerSidePropsContext) => {
-
-  const { id } = decodePassedToken(context.req.cookies['token'] as string);
-  
+export const getServerSideProps: GetServerSideProps<any> = async (context: GetServerSidePropsContext) => {
 
   const response = await axiosReq({
-    url: process.env.NEXT_PUBLIC_SITE_URL + '/profile/get_profile/' + id
+    url: process.env.NEXT_PUBLIC_SITE_URL + '/profile/get_profile/' + context.query.user_id
   });
 
   return {
