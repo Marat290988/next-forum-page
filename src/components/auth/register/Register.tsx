@@ -2,7 +2,7 @@ import { InputField } from "@/components/input-field/InputField";
 import { MyButton } from "@/components/ui/MyButton/MyButton";
 import { IForm } from "@/screens/auth/Auth";
 import { AuthService } from "@/services/auth.service";
-import { FC, FormEvent, useState } from "react";
+import { FC, FormEvent, useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 
 
@@ -32,6 +32,13 @@ export const Register: FC<IForm & {setRegister: () => void}> = ({
       setIsLoading(false);
     }
   };
+
+  const clientId = '683786685127-lbfh155lvus59p6omf23cbvq15cep823.apps.googleusercontent.com'
+
+  const googleLogin = () => {
+
+  }
+
 
   return (
     <>
@@ -84,6 +91,9 @@ export const Register: FC<IForm & {setRegister: () => void}> = ({
         <MyButton type="submit" canClick={isValidForm} isLoading={isLoading}>
           REGISTER
         </MyButton>
+        <div id="signInButton" onClick={googleLogin}>
+          CLICK
+        </div>
       </form>
     </>
   );

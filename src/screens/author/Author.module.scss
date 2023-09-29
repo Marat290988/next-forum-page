@@ -1,0 +1,40 @@
+.card-developer-main {
+  max-width: 1200px;
+  margin: 30px auto;
+  width: 100%;
+  padding: 0 10px;
+
+  hr {
+    border: 1px solid #9C27B0;
+  }
+}
+
+.card-developer-top {
+  background-color: var(--borderc);
+  border: 1px solid var(--borderc);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  font-size: 22px;
+  text-align: center;
+  color: var(--dark01);
+}
+
+.card-developer-info {
+  background-color: #673ab724;
+  color: #a675fd;
+  border: 1px solid var(--borderc);
+  padding: 10px;
+  font-size: 18px;
+}
+
+.card-developer-info p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-developer-card .card-developer-card {
+  font-size: 18px;
+  display: inline-block;
+  max-width: 25px;
+}
