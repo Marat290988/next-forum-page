@@ -19,7 +19,7 @@ export const ChangePic: FC<{picList: string[], close: () => void, setUrl: (url: 
           <IoMdCloseCircle />
         </div>
         <div className='flex gap-[5px] flex-wrap mt-[28px]'>
-          {picList && picList.map(pic => <div key={pic} style={{backgroundImage: `url(${pic})`}} className={styles['image']} onClick={() => changePic(pic)}>
+          {picList && picList.map(pic => <div key={pic} style={{backgroundImage: `url(/${pic})`}} className={styles['image']} onClick={() => changePic(pic)}>
             <div className={styles['image-cover']}><IoMdCheckmarkCircle /></div>
           </div>)}
         </div>

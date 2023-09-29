@@ -11,6 +11,8 @@ import { ProfileService } from '@/services/profile.service';
 import { ToastContainer, toast } from 'react-toastify';
 import { CommentService } from '@/services/comment.service';
 import { IComment } from '@/pages/topic';
+import { LastComments } from './last_comments/LastComments';
+import { Footer } from '@/components/footer/Footer';
 
 export const Profile: FC<{profileData: ProfileData}> = ({ profileData }) => {
 
@@ -32,8 +34,8 @@ export const Profile: FC<{profileData: ProfileData}> = ({ profileData }) => {
   }
 
   const getLastComment = async (userId: number) => {
-    CommentService.getLastCommentByUserId(userId).then((res: IComment[]) => {
-      setLastComments(res);
+    CommentService.getLastCommentByUserId(userId).then((res: {comments: IComment[]}) => {
+      setLastComments(res.comments);
     }).catch((e) => {
       console.warn(e);
       toast.error('Problems with network.');
@@ -48,8 +50,6 @@ export const Profile: FC<{profileData: ProfileData}> = ({ profileData }) => {
     getPicsList();
     getLastComment(profileData.user.id);
   }, []);
-
-  console.log(profileData)
 
   useEffect(() => {
     if (user && user.id === profileData.user.id) {
@@ -115,10 +115,12 @@ export const Profile: FC<{profileData: ProfileData}> = ({ profileData }) => {
 
           <div className={`${styles['card-profile']} flex-grow`} style={{minHeight: 'calc(100vh - 85px)'}}>
             {isEditPic && <ChangePic picList={pics} close={() => {setIsEditPic(false)}} setUrl={setUrl} />}
+            {!isEditPic && <LastComments comments={lastComments} />}
           </div>
 
         </div>
       </main>
+      <Footer />
     </>
   )
 }

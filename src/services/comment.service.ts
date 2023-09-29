@@ -31,4 +31,13 @@ export class CommentService {
     });
     return response.data;
   }
+
+  static async getLink(topicId: number, commentId: number) {
+    const response = await axiosReq({
+      url: '/comment/comment_link',
+      method: 'POST',
+      data: {topic_id: topicId, comment_id: commentId}
+    });
+    return response.data;
+  }
 }

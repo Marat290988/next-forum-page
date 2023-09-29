@@ -12,7 +12,8 @@ export interface IComment {
   text: string,
   updatedAt: string,
   authorComment: {name: string, createdAt: string, imgUrl: string},
-  avg?: number
+  avg?: number,
+  themeId?: number
 }
 
 const TopicPage = (props: {data: {comments: IComment[], topic: {forumId: number, id: number, title: string}, totalComment: number}}) => {

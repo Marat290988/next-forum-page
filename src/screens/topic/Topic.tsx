@@ -16,6 +16,7 @@ import { getKeyFromSerachParam, getQueryParamsString } from '@/utils/url.util';
 import { useRouter } from "next/router";
 import { useSearchParams } from 'next/navigation';
 import { Navigation } from '@/components/navigation/Navigation';
+import { Footer } from '@/components/footer/Footer';
 
 export const Topic: FC<{topicId: number, forumId: number, comments: IComment[], totalPage: number}> = (props) => {
 
@@ -118,8 +119,18 @@ export const Topic: FC<{topicId: number, forumId: number, comments: IComment[], 
       setCurrentPage(page);
       mutate();
     }
+    const commentEl = document.querySelector(`[data-comment-id="${router.query.id}"]`);
+    if (commentEl) {
+      commentEl.scrollIntoView();
+    }
   }, [router.query.p])
 
+  const loadCommentCont = (e: any) => {
+    console.log(e)
+    console.log(111)
+  }
+
+  
   return (
     <>
       <Header user={user} />
@@ -137,9 +148,9 @@ export const Topic: FC<{topicId: number, forumId: number, comments: IComment[], 
         theme="dark"
       />
       <main className={styles['main']}>
-        <section className={styles['section']}>
+        {commentState.length > 0 && <section className={styles['section']}>
           {commentState.map(c => <Comment comment={c} updateComment={updateComment} key={c.id} />)}
-        </section>
+        </section>}
         {canShow && <section className={styles['section']} >
           <MyEditor handleChangeEditorVal={handleChangeEditorVal} ref={childRef} />
           <div className={styles['button']}>
@@ -163,6 +174,7 @@ export const Topic: FC<{topicId: number, forumId: number, comments: IComment[], 
           />
         </section>
       </main>
+      <Footer />
     </>
   )
 }

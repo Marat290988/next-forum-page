@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import { FC, useState, useEffect, useRef } from "react";
 import { getKeyFromSerachParam, getQueryParamsString } from "@/utils/url.util";
 import { MyPagination } from "@/components/ui/MyPagination/MyPagination";
+import { Footer } from "@/components/footer/Footer";
 
 export const Forum: FC<{ forum?: IForum; name: string }> = ({
 
@@ -156,6 +157,7 @@ export const Forum: FC<{ forum?: IForum; name: string }> = ({
           </section>}
         </div>
       </main>
+      <Footer />
     </>
   );
 };

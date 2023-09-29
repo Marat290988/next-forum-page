@@ -88,7 +88,7 @@ export const Comment: FC<{ comment: IComment; updateComment: () => void }> = ({
   }, [user]);
 
   return (
-    <div className={`${styles["comment-main-container"]} ${ibm400.className}`}>
+    <div className={`${styles["comment-main-container"]} ${ibm400.className}`} data-comment-id={comment.id}>
       <ToastContainer
         position="top-right"
         autoClose={5000}
