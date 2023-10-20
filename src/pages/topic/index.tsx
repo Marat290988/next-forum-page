@@ -44,11 +44,11 @@ export const getServerSideProps: GetServerSideProps<any> = async (context: GetSe
   let response;
   if (page && quanityComment) {
     response = await axiosReq({
-      url: new URL(context.req.headers.referer as string).origin + '/api' + `/comment/get_comment_by_topic/${context.query.t}?p=${context.query.p}&c=${context.query.c}`
+      url: process.env.NEXT_PUBLIC_SITE_URL + `/comment/get_comment_by_topic/${context.query.t}?p=${context.query.p}&c=${context.query.c}`
     });
   } else {
     response = await axiosReq({
-      url: new URL(context.req.headers.referer as string).origin + '/api' + `/comment/get_comment_by_topic/${context.query.t}`
+      url: process.env.NEXT_PUBLIC_SITE_URL + '/api' + `/comment/get_comment_by_topic/${context.query.t}`
     });
   }
   let data = null;

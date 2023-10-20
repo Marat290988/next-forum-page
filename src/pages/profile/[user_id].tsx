@@ -20,7 +20,7 @@ export default ProfilePage;
 export const getServerSideProps: GetServerSideProps<any> = async (context: GetServerSidePropsContext) => {
 
   const response = await axiosReq({
-    url: new URL(context.req.headers.referer as string).origin + '/api' + '/profile/get_profile/' + context.query.user_id
+    url: process.env.NEXT_PUBLIC_SITE_URL + '/profile/get_profile/' + context.query.user_id
   });
 
   return {

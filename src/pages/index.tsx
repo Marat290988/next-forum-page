@@ -29,7 +29,7 @@ export default function HomePage(props: {data: StaticIndexItem[]}) {
 
 export const getServerSideProps: GetServerSideProps<{data: StaticIndexItem[]}> = async (context) => {
   const response = await axiosReq({
-    url: new URL(context.req.headers.referer as string).origin + '/api' + '/section/get_sections'
+    url: process.env.NEXT_PUBLIC_SITE_URL + '/section/get_sections'
   });
   // return {props: {
   //   data: response.data.sections
