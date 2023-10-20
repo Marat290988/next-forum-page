@@ -28,8 +28,11 @@ export default function HomePage(props: {data: StaticIndexItem[]}) {
 }
 
 export const getServerSideProps: GetServerSideProps<{data: StaticIndexItem[]}> = async (context) => {
+  // console.log(context.req.headers['x-forwarded-host'])
+  // console.log(context.req.headers['x-forwarded-proto'])
+  
   const response = await axiosReq({
-    url: process.env.NEXT_PUBLIC_SITE_URL + '/section/get_sections'
+    url: `${context.req.headers['x-forwarded-proto']}://${context.req.headers['x-forwarded-host']}/api` + '/section/get_sections'
   });
   // return {props: {
   //   data: response.data.sections

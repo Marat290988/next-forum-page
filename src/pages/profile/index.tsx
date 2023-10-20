@@ -36,7 +36,7 @@ export const getServerSideProps: GetServerSideProps<{data: ProfileData}> = async
   
 
   const response = await axiosReq({
-    url: process.env.NEXT_PUBLIC_SITE_URL + '/profile/get_profile/' + id
+    url: `${context.req.headers['x-forwarded-proto']}://${context.req.headers['x-forwarded-host']}/api` + '/profile/get_profile/' + id
   });
 
   return {

@@ -25,7 +25,7 @@ export default ForumPage;
 
 export const getServerSideProps: GetServerSideProps<any> = async (context: GetServerSidePropsContext) => {
   const response = await axiosReq({
-    url: process.env.NEXT_PUBLIC_SITE_URL + '/forum/get_forum/' + context.query.f
+    url: `${context.req.headers['x-forwarded-proto']}://${context.req.headers['x-forwarded-host']}/api` + '/forum/get_forum/' + context.query.f
   });
 
   let forum = null;
