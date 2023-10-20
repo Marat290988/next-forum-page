@@ -61,6 +61,7 @@ export default async function handler(
           res.setHeader('Set-Cookie', serialize('token', token, {...cookieOptions}));
           prisma.$disconnect();
           res.status(200).json({user: resUser, message: 'Successful logging.'});
+          return;
         } catch {
           prisma.$disconnect();
           res.status(422).json({message: 'Problems with DB.'});
@@ -70,6 +71,8 @@ export default async function handler(
     }).
     catch(() => {
       res.status(422).json({message: 'Problems with server.'});
+      return;
     });
+
 
 }

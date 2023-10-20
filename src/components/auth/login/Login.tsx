@@ -6,6 +6,7 @@ import { AuthService } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
 import { FC, FormEvent, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
+import { GoogleButton } from "./google-button/GoogleButton";
 
 export const Login: FC<IForm & { setLogin: () => void }> = ({
   formObj,
@@ -37,6 +38,39 @@ export const Login: FC<IForm & { setLogin: () => void }> = ({
       setIsLoading(false);
     }
   };
+
+  const clientId = '683786685127-lbfh155lvus59p6omf23cbvq15cep823.apps.googleusercontent.com'
+
+  const googleLogin = (e: any) => {
+    e.preventDefault();
+    var oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth';
+
+    // Create <form> element to submit parameters to OAuth 2.0 endpoint.
+    var form = document.createElement('form');
+    form.setAttribute('method', 'GET'); // Send as a GET request.
+    form.setAttribute('action', oauth2Endpoint);
+
+    // Parameters to pass to OAuth 2.0 endpoint.
+    var params: any = {'client_id': clientId,
+                  'redirect_uri': 'http://localhost:3000/wait?',
+                  'response_type': 'token',
+                  'scope': 'https://www.googleapis.com/auth/cloud-platform.read-only',
+                  'include_granted_scopes': 'true',
+                  };
+
+    // Add form parameters as hidden input values.
+    for (var p in params) {
+      var input = document.createElement('input');
+      input.setAttribute('type', 'hidden');
+      input.setAttribute('name', p);
+      input.setAttribute('value', params[p]);
+      form.appendChild(input);
+    }
+
+    // Add form to page and submit it to open the OAuth 2.0 endpoint.
+    document.body.appendChild(form);
+    form.submit();
+  }
 
   return (
     <>
@@ -76,9 +110,16 @@ export const Login: FC<IForm & { setLogin: () => void }> = ({
           isTouch={formObj["password"].isTouch}
           value={formObj["password"].value}
         />
-        <MyButton type="submit" canClick={isValidForm} isLoading={isLoading}>
-          LOGIN
-        </MyButton>
+        <div className="flex gap-3">
+
+          <MyButton type="submit" canClick={isValidForm} isLoading={isLoading}>
+            LOGIN
+          </MyButton>
+
+          <GoogleButton onClick={googleLogin} />
+
+        </div>
+
       </form>
     </>
   );
