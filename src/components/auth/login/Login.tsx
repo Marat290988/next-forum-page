@@ -52,7 +52,7 @@ export const Login: FC<IForm & { setLogin: () => void }> = ({
 
     // Parameters to pass to OAuth 2.0 endpoint.
     var params: any = {'client_id': clientId,
-                  'redirect_uri': 'http://localhost:3000/wait?',
+                  'redirect_uri': 'https://next-forum-page.vercel.app/wait?',
                   'response_type': 'token',
                   'scope': 'https://www.googleapis.com/auth/cloud-platform.read-only',
                   'include_granted_scopes': 'true',
