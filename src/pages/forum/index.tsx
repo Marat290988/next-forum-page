@@ -24,9 +24,8 @@ const ForumPage = (props: {forum: IForum}) => {
 export default ForumPage;
 
 export const getServerSideProps: GetServerSideProps<any> = async (context: GetServerSidePropsContext) => {
-
   const response = await axiosReq({
-    url: process.env.NEXT_PUBLIC_SITE_URL + '/forum/get_forum/' + context.query.f
+    url: new URL(context.req.headers.referer as string).origin + '/api' + '/forum/get_forum/' + context.query.f
   });
 
   let forum = null;

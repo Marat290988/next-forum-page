@@ -1,7 +1,7 @@
 import { Home } from '@/screens/home/Home';
 import { Inter } from 'next/font/google'
 import Head from 'next/head';
-import { GetStaticProps, InferGetStaticPropsType } from 'next';
+import { GetServerSideProps, GetStaticProps, InferGetStaticPropsType } from 'next';
 import { axiosReq } from '@/axios/api';
 
 const inter = Inter({ subsets: ['latin'] })
@@ -12,8 +12,10 @@ export interface StaticIndexItem {
   forums: {name: string, id: number}[]
 }
 
-export default function HomePage({data}: InferGetStaticPropsType<typeof getStaticProps>) {
 
+
+export default function HomePage(props: {data: StaticIndexItem[]}) {
+  const {data} = props;
   return (
     <>
       <Head>
@@ -25,14 +27,19 @@ export default function HomePage({data}: InferGetStaticPropsType<typeof getStati
   )
 }
 
-export const getStaticProps: GetStaticProps<{data: StaticIndexItem[]}> = async () => {
+export const getServerSideProps: GetServerSideProps<{data: StaticIndexItem[]}> = async (context) => {
   const response = await axiosReq({
-    url: process.env.NEXT_PUBLIC_SITE_URL + '/section/get_sections'
+    url: new URL(context.req.headers.referer as string).origin + '/api' + '/section/get_sections'
   });
-  return {props: {
-    data: response.data.sections
-  }, 
-    revalidate: 300
+  // return {props: {
+  //   data: response.data.sections
+  // }, 
+  //   revalidate: 300
+  // }
+  return {
+    props: {
+      data: response.data.sections
+    }
   }
 }
 

@@ -20,6 +20,7 @@ export async function middleware (req: NextRequest) {
       return NextResponse.redirect(homeUrl)
     }
   }
+
 }
 
 const closeForAuthorized = [
